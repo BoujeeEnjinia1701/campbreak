@@ -1,0 +1,12 @@
+id,requirement,target,result,status
+R1,Rate-of-rise threshold,8 C/min,"8 C/min over 60 s, plus 57 C fixed",Met by design (firmware threshold)
+R2,No alarm in 1 h of cooking at 1 m,No alarm,Not calculable on paper,To show at TRL 4
+R3,Sound at 3 m,>= 85 dB(A),85.5 dB(A),Met (est.)
+R4,Relay to station and all alarms,<= 10 s,7.2 s worst case,Met (est.)
+R5,Battery life,>= 12 months,331 months; shelf life of the cells limits it to about 5 years,Met (est.)
+R6,"Cart on a 10 % slope, 100 m","<= 3 min, width <= 0.9 m",1.7 min at 1.0 m/s; 89 N per person; width 850 mm,Met (est.)
+R7,Flow for 10 min,>= 20 L/min,20.4 L/min; 47 W per person,Met (est.)
+R8,Jet reach,>= 6 m,6.9 m,Met (est.)
+R9,Water on target 100 m away,<= 3 min,3.8 min (2.8 min for a shelter 70 m away with a 30 s muster),Not met on paper at 100 m
+R10,Repairable locally,"Hand tools, market parts",Every wear part is a market item,Met by design
+R11,Value-engineering target,"USD 1,600","USD 1,355",USD 245 under the target
