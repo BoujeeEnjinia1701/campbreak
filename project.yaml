@@ -20,6 +20,7 @@ trl_evidence:
   - docs/06-design-decisions.md
   - docs/decisions/0001-trl2-review-decisions.md
   - docs/decisions/0002-design-for-construction.md
+  - docs/decisions/0003-r9-response-time.md
 shortlisted: false
 pitch: >-
   Gives camp residents block alarms and a hand-pumped hose cart to fight shelter fires in the first minutes.

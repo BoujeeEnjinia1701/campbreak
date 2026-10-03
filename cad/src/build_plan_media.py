@@ -36,7 +36,7 @@ def comps():
 
 
 def fuse(*keys):
-    return Compound(children=[comps()[k].shape for k in keys])
+    return Compound([comps()[k].shape for k in keys])
 
 
 def win(shape, x0, x1, y0, y1, z0, z1):
@@ -81,7 +81,8 @@ GROUPS = [
     ("reel", "Reel spindle, spacers, drum and swivel", ("spindle", "reel_spacers", "reel", "swivel"), COL["reel"]),
     ("hose", "Delivery hose and connecting hose", ("wound_hose", "conn_hose"), COL["hose"]),
     ("tray", "Hose tray and bolts", ("tray", "tray_bolts"), COL["tray"]),
-    ("kit", "Suction hose, strainer, nozzle, tap adaptor", ("suction", "strainer", "nozzle", "tap"), COL["kit"]),
+    ("kit", "Suction hose coupled to the pump, straps, foot valve, nozzle, tap adaptor",
+     ("suction_adaptor", "suction_run", "hose_straps", "suction", "strainer", "nozzle", "tap"), COL["kit"]),
     ("posts", "Station posts in concrete collars", ("posts", "collars_c"), COL["post"]),
     ("beams", "Roof beams", ("beams",), COL["beam"]),
     ("roof", "Purlins and roof sheet", ("purlins", "sheet"), COL["roof"]),
@@ -107,7 +108,7 @@ def overview():
            "kit": (cx, -300, 900), "posts": (0, 0, 0), "beams": (0, 0, 500), "roof": (0, 0, 1000),
            "sbox": (-350, 0, 0), "sign": (300, -500, 0), "drum": (900, -500, 0)}
     parts = [G(k, off[k]) for k, *_ in GROUPS]
-    al = Compound(children=[c.shape for c in comps().values() if c.group == "alarm"]).scale(5.0)
+    al = Compound([c.shape for c in comps().values() if c.group == "alarm"]).scale(5.0)
     parts.append(part("Heat alarm, one per shelter (drawn 5 x size)", Pos(2200, -1500, 1400) * al, COL["alarm"]))
     return bv.overview(parts, OUT / "overview.png", "CampBreak prototype: every component, pulled apart",
                        subtitle="Numbered in build order: hose cart (1 to 12), block station (13 to 18), heat alarm (19). "
@@ -220,7 +221,7 @@ def sheets(which=None):
          "  centred, its front edge 5 behind the front cross member's front",
          "  face; four M8 bolts through the bearer tops, nuts below.",
          "Check: the tray sits flat and clears the handle arms by 30 mm."], inset=(24, -58))
-    S[109] = lambda: sheet(109, Compound(children=[sn["posts"][0], sn["posts"][1], sn["collars"][0], sn["collars"][1]]),
+    S[109] = lambda: sheet(109, Compound([sn["posts"][0], sn["posts"][1], sn["collars"][0], sn["collars"][1]]),
         "Station posts", COL["post"], [G("beams"), G("roof")], "station posts and concrete collars (left pair drawn)",
         "60 x 60 x 3 mm square tube, S235; concrete collars 300 mm across",
         ["Four posts: two front (3,160 long) and two back (3,000 long), each",
@@ -252,7 +253,8 @@ def sheets(which=None):
          "Two 9 mm holes on the centre line, 60 from the top and bottom edges.",
          "Print the instructions in the camp languages with pictograms:",
          "  leave first, raise the alarm, fetch the cart, small fires only,",
-         "  never water on oil or live wires, call the fire service.",
+         "  never water on oil or live wires, call the fire service, and",
+         "  go when two arrive: the first two take the cart, within 30 s.",
          "Fit: on the front face of the back right post, bottom edge 1,100",
          "  above the ground, two M8 bolts through the post.",
          "Check: readable from 5 m in daylight."], inset=(20, -60))
@@ -284,13 +286,13 @@ def joints(which=None):
     c = comps()
     fr = M.cart_frame_parts()
     hd = M.handle_parts()
-    rails = Compound(children=fr["rails"])
+    rails = Compound(fr["rails"])
     J = {}
     # 1 axle through the axle plates, spacer, hub and collar (right side, cut open through the axle)
     b1 = (240, 440, 90, 210, 120, 280)
     J[1] = lambda: bv.joint([x for x in [
         W(rails, "Side rail", COL["frame"], b1),
-        W(Compound(children=fr["axle_plates"]), "Axle plates, 8 mm, either side of the rail", "#7A271A", b1),
+        W(Compound(fr["axle_plates"]), "Axle plates, 8 mm, either side of the rail", "#7A271A", b1),
         W(c["axle"].shape, "Axle, 20 mm, through 21 mm holes", COL["axle"], b1),
         W(c["wheel_spacers"].shape, "Spacer, 22 long", "#0F766E", b1),
         W(c["wheels"].shape, "Wheel hub, 75 long", COL["wheel"], b1),
@@ -301,8 +303,8 @@ def joints(which=None):
     b2 = (220, 340, -720, -560, 170, 330)
     J[2] = lambda: bv.joint([x for x in [
         W(rails, "Side rail", COL["frame"], b2),
-        W(Compound(children=fr["cross_front"]), "Front cross member", "#7A271A", b2),
-        W(Compound(children=fr["legs"]), "Leg", "#9F1239", b2),
+        W(Compound(fr["cross_front"]), "Front cross member", "#7A271A", b2),
+        W(Compound(fr["legs"]), "Leg", "#9F1239", b2),
         W(c["handle"].shape, "Handle arm, cut at 44 deg", COL["handle"], b2)] if x],
         OUT / "joint-02.png", "Joint 2: handle arm foot on the rail top",
         subtitle="The arm sits flat on the rail and its toe touches the end of the front cross member; welded all round",
@@ -319,7 +321,7 @@ def joints(which=None):
     b4 = (-170, 170, 190, 470, 245, 620)
     J[4] = lambda: bv.joint([x for x in [
         W(c["stand"].shape, "Stand plate and gussets", COL["stand"], b4),
-        W(Compound(children=fr["cross_rear"] + fr["bearers"]), "Rear cross member and bearers", COL["frame"], b4),
+        W(Compound(fr["cross_rear"] + fr["bearers"]), "Rear cross member and bearers", COL["frame"], b4),
         W(c["pump"].shape, "Pump flange and body", COL["pump"], b4),
         W(c["pump_bolts"].shape, "Four M12 bolts on a 150 mm square", "#E5A50A", b4)] if x],
         OUT / "joint-04.png", "Joint 4: hand pump bolted to the stand plate",
@@ -345,7 +347,7 @@ def joints(which=None):
     # 7 hose tray bolted to the bearers
     b7 = (40, 260, -700, -520, 190, 340)
     J[7] = lambda: bv.joint([x for x in [
-        W(Compound(children=fr["bearers"] + fr["cross_front"]), "Bearer and front cross member", COL["frame"], b7),
+        W(Compound(fr["bearers"] + fr["cross_front"]), "Bearer and front cross member", COL["frame"], b7),
         W(c["tray"].shape, "Hose tray, 1.5 mm sheet", COL["tray"], b7),
         W(c["tray_bolts"].shape, "M8 bolt through the bearer top", "#E5A50A", b7)] if x],
         OUT / "joint-07.png", "Joint 7: hose tray on the bearers",
@@ -381,6 +383,18 @@ def joints(which=None):
     J[11] = lambda: bv.joint([K(k, v) for k, v in inside.items()], OUT / "joint-11.png",
         "Joint 11: inside the heat alarm (cut open)",
         subtitle="Cut through the middle; the thermistor bead sits in the guard, below the box", cut="+Y", elev=12, azim=-70)
+    # 12 suction hose coupled to the pump inlet and lying on the left rail (seen from the back left)
+    b12 = (-330, 60, 180, 470, 150, 320)
+    J[12] = lambda: bv.joint([x for x in [
+        W(rails + Compound(fr["cross_rear"]), "Left rail and rear cross member", COL["frame"], b12),
+        W(c["pump"].shape, "Pump inlet", COL["pump"], b12),
+        W(c["inlet_coupling"].shape, "Cam-lever coupler on the pump inlet", "#9CA3AF", b12),
+        W(c["suction_adaptor"].shape, "Hose adaptor with elbow, left coupled", "#E5A50A", b12),
+        W(c["suction_run"].shape, "Suction hose, full of water, on the rail top", COL["kit"], b12),
+        W(c["hose_straps"].shape, "Rubber strap round rail and hose", COL["wheel"], b12)] if x],
+        OUT / "joint-12.png", "Joint 12: suction hose left coupled to the pump inlet",
+        subtitle="Seen from the back left and below the deck; the foot valve at the far end keeps the hose and pump full",
+        elev=12, azim=130)
     out = []
     for n in sorted(J):
         if which and n not in which:
@@ -410,9 +424,10 @@ CART_STEPS = [
     ("Hoses", ["wound_hose", "conn_hose"], {"wound_hose": (0, 0, 500), "conn_hose": (0, 0, 400)},
      "Connect the pump outlet to the swivel; wind the 30 m hose on"),
     ("Hose tray", ["tray", "tray_bolts"], {"tray": (0, 0, 350), "tray_bolts": (0, 0, 350)}, "Bolt the tray to the bearers with four M8 bolts"),
-    ("Suction kit", ["suction", "strainer", "nozzle", "tap"],
-     {"suction": (0, 0, 300), "strainer": (0, 0, 450), "nozzle": (0, 0, 450), "tap": (0, 0, 450)},
-     "Coil the suction hose in the tray; lay the strainer, nozzle and tap adaptor inside the coil"),
+    ("Suction kit", ["suction_adaptor", "suction_run", "hose_straps", "suction", "strainer", "nozzle", "tap"],
+     {"suction_adaptor": (0, 0, -200), "suction_run": (-250, 0, 250), "hose_straps": (-250, 0, 400), "suction": (0, 0, 300),
+      "strainer": (0, 0, 450), "nozzle": (0, 0, 450), "tap": (0, 0, 450)},
+     "Couple the suction hose to the pump inlet; strap it along the left rail; coil the rest in the tray"),
 ]
 STATION_STEPS = [
     ("Posts in their collars", ["collars_c", "posts"], {"posts": (0, 0, 900), "collars_c": (0, 0, 0)}, "Set the four posts plumb and pour the collars"),
@@ -438,7 +453,7 @@ ALARM_STEPS = [
 
 def steps(which=None):
     c = comps()
-    cart_all = Compound(children=[x.shape for x in c.values() if x.group == "cart"])
+    cart_all = Compound([x.shape for x in c.values() if x.group == "cart"])
     nice = {"frame": "Base frame", "feet": "Rubber feet", "collars_c": "Concrete collars"}
     out, n = [], 0
     for grp, seq, view in (("cart", CART_STEPS, (24, -58)), ("station", STATION_STEPS, (22, -55)), ("alarm", ALARM_STEPS, (18, -60))):

@@ -13,6 +13,10 @@ Axes (cart and station): X across the cart (right +X), Y along it with the pull 
 two wheels and two front legs, under the station roof, ready to be pulled straight out to -Y.
 The heat alarm has its own axes: its mounting plate top at z = 0 under a roof pole along X.
 
+Revised 2026-10-03 (CBK-DDR-003, Amish's R9 decision): the foot valve has a positive check so the pump
+and suction hose stay primed, and the suction hose is stowed coupled to the pump inlet by its cam-lever
+adaptor, along the top of the left rail under two rubber straps and onto its coil in the tray.
+
 Revised 2026-10-03 to make the concept buildable (CBK-DDR-002, "Design for construction"): every
 part is a cut, drilled, welded, folded or bought item, and every joint has a fixing. Main
 dimensions and interfaces only; tolerances are TRL 4 work. The same PARAMS feed
@@ -26,7 +30,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from build123d import (Axis, Box, Compound, Cylinder, Pos, Rot, Spline, Plane, Circle, sweep,
-                       Vector, export_step, export_stl, Wire)
+                       Vector, export_step, export_stl, Wire, Transition)
 
 # Top-level parameters (mm). Edit these, not the geometry below.
 P = {
@@ -62,6 +66,9 @@ P = {
     # hose tray and what it carries
     "TRAY": (400.0, 370.0, 80.0, 1.5), "TRAY_Y": -460.0,
     "COIL": (360.0, 300.0, 70.0),          # suction hose coil outer, inner diameter, height
+    # suction hose stowed coupled to the pump inlet (CBK-DDR-003): 25 mm bore, 34 mm outside,
+    # run along the top of the left rail, held by two rubber straps, into the coil in the tray
+    "SUC_OD": 34.0, "SUC_X": -280.0, "STRAP_Y": (-60.0, 240.0), "STRAP": (20.0, 2.0),
     # block station
     "ST_Y": 700.0, "POST": (60.0, 3.0), "POST_X": 650.0, "POST_TOP": 2400.0, "POST_EMBED": 600.0,
     "COLLAR_D": 300.0, "BEAM": (40.0, 2.0), "BEAM_Y": (-1900.0, 100.0), "FALL": 5.0,
@@ -81,8 +88,9 @@ BOM = {  # BOM line: name
     4: "Station sign board", 5: "Water drum, 200 L", 6: "Cart frame, welded", 7: "Wheels, axle, spacers and collars",
     8: "Hand pump, semi-rotary, 25 mm ports", 9: "Lever extension with T-grip", 10: "Hose reel drum, spindle and swivel inlet",
     11: "Delivery hose 19 mm x 30 m and connecting hose", 12: "Nozzle, jet and spray, with shut-off",
-    13: "Suction hose 25 mm x 4 m with foot valve strainer", 14: "Quick couplings, 25 mm", 15: "Tap adaptor",
-    16: "Hose tray", 17: "Fasteners", 18: "Paint, reflective tape and labels", 19: "Pressure relief valve, 4 bar",
+    13: "Suction hose 25 mm x 4 m with check foot valve", 14: "Quick couplings, 25 mm", 15: "Tap adaptor",
+    16: "Hose tray", 17: "Fasteners", 18: "Paint, reflective tape, labels and drill card", 19: "Pressure relief valve, 4 bar",
+    20: "Suction hose straps",
 }
 
 
@@ -259,12 +267,16 @@ def pump_parts(p=P):
                  + [cyl("y", (s1 * 75, zc + s2 * 75), 9.5, p["STAND_Y"] - 10, p["STAND_Y"]) for s1 in (-1, 1) for s2 in (-1, 1)])
     zi = zc - bd / 2 - 60
     coupling = cyl("z", (0, py), 25, zi - 45, zi)
-    cap = cyl("z", (0, py), 27, zi - 60, zi - 45)
+    # the suction hose's cam-lever adaptor stays coupled in the coupler (CBK-DDR-003); a 90 deg elbow
+    # hose tail under it turns the hose towards the left rail
+    ze = zi - 100
+    adaptor = fuse([cyl("z", (0, py), 22, zi - 80, zi - 45), cyl("z", (0, py), 15, ze, zi - 80),
+                    cyl("x", (py, ze), 15, -55, 0)])
     zr = zc + bd / 2 + 35
     relief = fuse([cyl("x", (py, zr), 12, pr - 1, 70), cyl("z", (85, py), 18, zr - 30, zr + 45),
                    cyl("z", (85, py), 8, zr - 65, zr - 30)])
     relief = relief - cyl("z", (0, py), pr, 0, 1000)
-    return dict(pump=[pump], pump_bolts=[bolts], inlet_coupling=[coupling, cap], relief=[relief])
+    return dict(pump=[pump], pump_bolts=[bolts], inlet_coupling=[coupling], suction_adaptor=[adaptor], relief=[relief])
 
 
 def lever_parts(p=P, swing=0.0):
@@ -345,6 +357,74 @@ def connecting_hose_segments(p=P, n=10):
         segs.append(Pos(*((a + b) / 2)) * (Plane(origin=(0, 0, 0), z_dir=d.normalized()) * Cylinder(r, d.length)))
     segs += [Pos(*v) * Sphere(r) for v in q[1:-1]]
     return fuse(segs)
+
+
+def suction_run_path(p=P):
+    """Path of the stowed suction hose (CBK-DDR-003): out of the adaptor's elbow under the pump inlet heading
+    left, climbing to rail-top height, turning forward round behind the left rail end, straight along the top
+    of the left rail, then up over the tray's back corner and down onto the coil. Tightest bend about 63 mm
+    radius (the hose bought must allow 60 mm or less)."""
+    from build123d import Line
+    D = derived(p)
+    r = p["SUC_OD"] / 2
+    py = p["PORT_Y"]
+    x = p["SUC_X"]
+    ze = suction_elbow_z(p)
+    zr = D["z1"] + r                                             # hose centre on the rail top
+    zh = zr + 6                                                  # crossing height behind the rail end
+    zt = D["z1"] + p["TRAY"][3] + p["COIL"][2] + r               # hose centre on the coil top
+    yc = p["TRAY_Y"]
+    y1, y2 = 310.0, -100.0                                       # straight run on the rail
+    k = [1.3, 1.3]
+    r1 = Spline((-55, py, ze), (-122, py, (ze + zh) / 2), (-190, py, zh), tangents=[(-1, 0, 0), (-1, 0, 0)], tangent_scalars=k)
+    r2 = Spline((-190, py, zh), (-257, py - 23, (zh + zr) / 2), (x, y1, zr), tangents=[(-1, 0, 0), (0, -1, 0)], tangent_scalars=k)
+    run = Line((x, y1, zr), (x, y2, zr))
+    f1 = Spline((x, y2, zr), (-269, -220, zr + 52), (-224, -300, zr + 95), (-155, yc + 60, zt),
+                tangents=[(0, -1, 0), (0.6, -0.8, 0)])
+    return Wire([r1, r2, run, f1])
+
+
+def suction_elbow_z(p=P):
+    return p["PUMP_Z"] - p["PUMP_BODY"][0] / 2 - 60 - 100
+
+
+def suction_run(p=P):
+    path = suction_run_path(p)
+    prof = Plane(origin=path @ 0, z_dir=(-1, 0, 0)) * Circle(p["SUC_OD"] / 2)
+    return sweep(prof, path, transition=Transition.RIGHT)
+
+
+def suction_run_segments(p=P, n=24):
+    """The stowed suction hose as straight segments with round joints, for 2D views."""
+    from build123d import Sphere
+    sp = suction_run_path(p)
+    r = p["SUC_OD"] / 2
+    q = [sp @ (i / n) for i in range(n + 1)]
+    segs = []
+    for a, b in zip(q[:-1], q[1:]):
+        d = (b - a).normalized()
+        # a segment within 3 deg of an axis is drawn exactly along it: nearly edge-on circles make
+        # degenerate ellipses the SVG exporter cannot write; the joint spheres hide the small step
+        for ax in ((1, 0, 0), (0, 1, 0), (0, 0, 1)):
+            if abs(d.dot(Vector(*ax))) > math.cos(math.radians(3)):
+                d = Vector(*ax) * (1 if d.dot(Vector(*ax)) > 0 else -1)
+        segs.append(Pos(*((a + b) / 2)) * (Plane(origin=(0, 0, 0), z_dir=d) * Cylinder(r, (b - a).length)))
+    segs += [Pos(*v) * Sphere(r) for v in q[1:-1]]
+    return fuse(segs)
+
+
+def hose_straps(p=P):
+    """Two rubber straps, each round the left rail and the suction hose lying on it."""
+    D = derived(p)
+    x, r = p["SUC_X"], p["SUC_OD"] / 2
+    w, t = p["STRAP"]
+    X = p["RAIL_X"]
+    out = []
+    for y in p["STRAP_Y"]:
+        x0, x1 = -X - 0.5, x + r + 0.5
+        inner = bx(x0, x1, y - w / 2 - 1, y + w / 2 + 1, D["z0"], D["z1"] + 2 * r)
+        out.append(bx(x0 - t, x1 + t, y - w / 2, y + w / 2, D["z0"] - t, D["z1"] + 2 * r + t) - inner)
+    return out
 
 
 def tray_parts(p=P):
@@ -541,7 +621,7 @@ def components(p=P):
     add("pump", "Hand pump, semi-rotary, 25 mm ports", pm["pump"], "#1D4ED8", 8, (0, 350, 0), make="buy")
     add("pump_bolts", "Pump bolts, 4 x M12", pm["pump_bolts"], "#9CA3AF", 17, (0, 350, 0), make="buy")
     add("relief", "Pressure relief valve, set at 4 bar", pm["relief"], "#DC2626", 19, (250, 350, 0), make="buy")
-    add("inlet_coupling", "Inlet quick coupling and cap", pm["inlet_coupling"], "#9CA3AF", 14, (0, 350, -150), make="buy")
+    add("inlet_coupling", "Inlet quick coupling", pm["inlet_coupling"], "#9CA3AF", 14, (0, 350, -150), make="buy")
     add("lever", "Lever extension with T-grip", lv["lever_hub"] + lv["lever"] + lv["tgrip"], "#E5A50A", 9, (0, 650, 300), make="weld")
     add("lever_grips", "T-grip sleeves", lv["lever_grips"], "#1F2937", 9, (0, 650, 300), make="buy")
     add("spindle", "Reel spindle and collar", rl["spindle"], "#9CA3AF", 10, (-500, 0, 650), make="cut")
@@ -553,7 +633,11 @@ def components(p=P):
     add("tray", "Hose tray", tr["tray"], "#6B7280", 16, (0, -150, 500), make="fold")
     add("tray_bolts", "Tray bolts, 4 x M8", tr["tray_bolts"], "#9CA3AF", 17, (0, -150, 500), make="buy")
     add("suction", "Suction hose, 25 mm x 4 m, coiled", tr["suction_coil"], "#0F766E", 13, (0, -150, 750), make="buy")
-    add("strainer", "Foot valve strainer", tr["strainer"], "#9CA3AF", 13, (0, -150, 900), make="buy")
+    add("suction_adaptor", "Suction hose adaptor, coupled to the pump inlet", pm["suction_adaptor"], "#B8BEC6", 14,
+        (0, 350, -300), make="buy")
+    add("suction_run", "Suction hose run, pump inlet to the tray", [suction_run(p)], "#0F766E", 13, (-250, 0, 300), make="buy")
+    add("hose_straps", "Suction hose straps, rubber", hose_straps(p), "#1F2937", 20, (-250, 0, 300), make="buy")
+    add("strainer", "Foot valve with check and strainer", tr["strainer"], "#9CA3AF", 13, (0, -150, 900), make="buy")
     add("nozzle", "Nozzle, jet and spray", tr["nozzle"], "#E5A50A", 12, (0, -150, 900), make="buy")
     add("tap", "Tap adaptor", tr["tap_adaptor"], "#B8BEC6", 15, (0, -150, 900), make="buy")
     # station, in build order
@@ -677,10 +761,31 @@ def checks(p=P):
     for k in ("strainer", "nozzle", "tap"):
         chk(f"{C[k].name} on the tray floor", S(k), S("tray"), "touch")
         chk(f"{C[k].name} inside the coil", S(k), S("suction"), 2.0)
+    # stowed suction hose, coupled to the pump (CBK-DDR-003)
+    chk("Suction adaptor in the inlet coupler", S("suction_adaptor"), S("inlet_coupling"), "touch")
+    chk("Suction adaptor clear of the frame", S("suction_adaptor"), S("frame"), 10.0)
+    chk("Suction hose on the adaptor's elbow tail", S("suction_run"), S("suction_adaptor"), "touch")
+    chk("Suction hose lying on the left rail top", S("suction_run"), fuse(fr["rails"]), "touch")
+    chk("Suction hose clear of the ground", S("suction_run"), bx(-2000, 2000, -3000, 3000, -50, 0), 150.0)
+    chk("Suction hose clear of the wheels", S("suction_run"), S("wheels"), 15.0, vol=False)
+    chk("Suction hose clear of the axle, spacers and collars", S("suction_run"), S("axle") + S("wheel_spacers") + S("collars"), 10.0, vol=False)
+    chk("Suction hose clear of the pump, stand and relief valve", S("suction_run"), S("pump") + S("stand") + S("relief"), 10.0, vol=False)
+    chk("Suction hose clear of the reel, uprights and hoses", S("suction_run"), S("reel") + S("uprights") + S("wound_hose") + S("conn_hose"), 20.0, vol=False)
+    chk("Suction hose clear of the tray walls", S("suction_run"), S("tray"), 2.0, vol=False)
+    chk("Suction hose clear of the handle", S("suction_run"), S("handle"), 30.0, vol=False)
+    chk("Suction hose run ends on the coil", S("suction_run"), S("suction"), "touch")
+    chk("Hose straps round the hose", S("hose_straps"), S("suction_run"), "touch")
+    chk("Hose straps round the rail", S("hose_straps"), fuse(fr["rails"]), "touch")
+    chk("Hose straps clear of the wheels", S("hose_straps"), S("wheels"), 10.0)
+    chk("Hose straps clear of the axle plates", S("hose_straps"), fuse(fr["axle_plates"]), 10.0)
+    for ang in (-P["SWING"], P["SWING"]):
+        lv = lever_parts(p, swing=ang)
+        lvs = fuse(lv["lever_hub"] + lv["lever"] + lv["tgrip"] + lv["lever_grips"])
+        chk(f"Lever swung {ang:+.0f} deg clear of the suction hose", lvs, S("suction_run") + S("suction_adaptor"), 50.0, vol=False)
     chk("Strainer, nozzle and tap adaptor apart", S("strainer"), S("nozzle") + S("tap"), 2.0)
     chk("Nozzle clear of the tap adaptor", S("nozzle"), S("tap"), 2.0)
     # station
-    cart = fuse([c.shape for c in C.values() if c.group == "cart" and c.key != "conn_hose"])
+    cart = fuse([c.shape for c in C.values() if c.group == "cart" and c.key not in ("conn_hose", "suction_run")])
     lvs = [fuse(sum((v for v in lever_parts(p, swing=a).values()), [])) for a in (-P["SWING"], P["SWING"])]
     for i in range(4):
         chk(f"Post {i + 1} in its concrete collar", sn["posts"][i], sn["collars"][i], "touch")
@@ -750,7 +855,7 @@ if __name__ == "__main__":
         "campbreak-alarm": [c.shape for c in G["alarm"]] + [alarm_pole()],
     }
     for name, shapes in sets.items():
-        c = Compound(children=shapes)
+        c = Compound(shapes)
         export_step(c, str(out / "step" / f"{name}.step"))
         export_stl(c, str(out / "stl" / f"{name}.stl"), tolerance=0.5, angular_tolerance=0.3)
         bb = c.bounding_box()

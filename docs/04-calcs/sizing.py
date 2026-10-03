@@ -26,7 +26,7 @@ A_IN = dict(
     d_jet=6.0e-3, cd=0.96,
     d_hose=19.0e-3, l_hose=30.0, d_conn=19.0e-3, l_conn=1.2, eps=0.01e-3,
     k_fittings=4.0,     # swivel, tee, relief valve tee and couplings on the delivery side (est.)
-    d_suc=25.0e-3, l_suc=4.0, k_suction=5.0,   # foot valve, strainer and coupling (est.)
+    d_suc=25.0e-3, l_suc=4.0, k_suction=7.0,   # spring check foot valve, strainer, elbow and coupling (est.; CBK-DDR-003)
     dz_nozzle=1.0,      # nozzle up to 1 m above the pump (slope or raised arm)
     lift=1.5,           # worst-case suction lift from a low open container (est.)
     angle=30.0,         # jet elevation for reach, degrees
@@ -114,11 +114,22 @@ def alarm(b=B_IN):
 BOUGHT_KG = {  # (est.) masses of bought parts, kg
     "feet": 0.2, "grips": 0.3, "wheels": 2 * 5.5, "collars": 0.3, "pump": 14.0, "pump_bolts": 0.5,
     "inlet_coupling": 0.4, "relief": 0.6, "lever_grips": 0.1, "reel": 9.0, "wound_hose": 11.4, "swivel": 0.8,
-    "conn_hose": 0.6, "tray_bolts": 0.1, "suction": 1.8, "strainer": 0.8, "nozzle": 0.6, "tap": 0.3,
+    "conn_hose": 0.6, "tray_bolts": 0.1, "suction": 1.3, "strainer": 1.0, "nozzle": 0.6, "tap": 0.3,
+    # CBK-DDR-003: the 4 m suction hose (1.8 kg) is split between the coil and the run to the pump;
+    # brass spring check foot valve; cam-lever adaptor with elbow tail; two rubber straps
+    "suction_run": 0.5, "suction_adaptor": 0.3, "hose_straps": 0.1,
 }
+PRIMED_L = 0.6      # (est.) water held in the pump body when primed, L; the suction hose is added from its bore
 STEEL = 7.85e-6   # kg per mm3
-C_IN = dict(crr=0.10, slope=0.10, n_people=2, f_person=100.0, v_walk=1.0, v_brisk=1.5, dist=100.0,
-            muster=60.0, pull_out=15.0, setup=30.0, prime=15.0, sited=70.0)
+C_IN = dict(crr=0.10, slope=0.10, n_people=2, f_person=100.0, v_walk=1.0, dist=100.0, sited=70.0,
+            # R9 timeline after CBK-DDR-003 (Amish, 2026-10-03, decision 1A)
+            gather=30.0,        # "go when two arrive": the first two at the station leave with the cart; at most 30 s (drilled)
+            pull_out=15.0,      # pull the cart out from under the station roof
+            drop=10.0,          # lift the pre-coupled suction hose off the cart and drop the foot valve in the water (est.)
+            pay_out=25.0,       # second person runs out the 30 m hose from the reel and aims (est., about 1.2 m/s)
+            strokes=3.0,        # first strokes to lift water in a primed pump and suction hose (est.)
+            # TRL 3 baseline before the change (CBK-CAL-001 v0.1), for comparison
+            muster_old=60.0, setup_old=30.0, prime_old=15.0)
 
 
 def cart(c=C_IN):
@@ -135,6 +146,13 @@ def cart(c=C_IN):
         mass += m
         for i, v in enumerate((cen.X, cen.Y, cen.Z)):
             mom[i] += m * v
+    # water held in the primed pump and suction hose (CBK-DDR-003), placed at the centre of the suction run
+    m_w = (PRIMED_L / 1000.0 + math.pi / 4 * A_IN["d_suc"] ** 2 * A_IN["l_suc"]) * rho
+    cw = comps["suction_run"].shape.center()
+    rows.append(("Water held in the primed pump and suction hose", m_w))
+    mass += m_w
+    for i, v in enumerate((cw.X, cw.Y, cw.Z)):
+        mom[i] += m_w * v
     cg = [v / mass for v in mom]
     W = mass * g
     ay = P["AXLE_Y"]
@@ -146,19 +164,35 @@ def cart(c=C_IN):
     f_pull = W * (math.sin(th) + c["crr"] * math.cos(th))
     per_person = f_pull / c["n_people"]
     t_walk = c["dist"] / c["v_walk"]
-    t_brisk = c["dist"] / c["v_brisk"]
     a = alarm()
-    t_r9 = a["t_total"] + c["muster"] + c["pull_out"] + t_walk + c["setup"] + c["prime"]
-    t_r9_fast = a["t_total"] + 30.0 + c["pull_out"] + t_brisk + c["setup"] + c["prime"]
-    # siting rule of CBK-DDR-001 D9: no shelter more than 70 m from a station, 30 s muster, walking pace
-    t_r9_sited = a["t_total"] + 30.0 + c["pull_out"] + c["sited"] / c["v_walk"] + c["setup"] + c["prime"]
+    # R9: water on target. Once pumping starts, the empty delivery line (30 m reel hose and the 1.2 m
+    # connecting hose) has to fill before water leaves the nozzle. The TRL 3 note v0.1 left this out.
+    q = pump()["q_lmin"] / 60000.0
+    v_line = math.pi / 4 * (A_IN["d_hose"] ** 2 * A_IN["l_hose"] + A_IN["d_conn"] ** 2 * A_IN["l_conn"])
+    t_fill = v_line / q
+    # two people arrive: one drops the suction hose and pumps, the other runs out the hose and aims
+    after = max(c["pay_out"], c["drop"] + c["strokes"] + t_fill)
+    before = a["t_total"] + c["gather"] + c["pull_out"]
+    t_r9 = before + t_walk + after
+    t_r9_sited = before + c["sited"] / c["v_walk"] + after
+    # if the delivery hose were also stowed full behind the shut nozzle (not decided; option for Amish)
+    after_wet = max(c["pay_out"], c["drop"] + c["strokes"])
+    t_r9_wet = before + t_walk + after_wet
+    # like-for-like baseline: the v0.1 timeline with the hose fill added
+    t_r9_old = a["t_total"] + c["muster_old"] + c["pull_out"] + t_walk + c["setup_old"] + c["prime_old"]
+    t_r9_old_fill = t_r9_old + t_fill
+    # one person pumps until the next volunteers arrive: shaft power on one person
+    p_one = pump()["p_shaft"]
+    v_suc = math.pi / 4 * A_IN["d_suc"] ** 2 * A_IN["l_suc"]
     half_track = M.derived()["track"] / 2
     tip_side = math.degrees(math.atan(half_track / cg[2]))
     # tipping backwards about the wheels when parked on a slope facing downhill: CG ahead of the axle by
     tip_back = math.degrees(math.atan((ay - cg[1]) / (cg[2] + 1e-9)))
-    bb = M.Compound(children=[k.shape for k in comps.values()]).bounding_box()
-    return dict(mass=mass, cg=cg, on_legs=on_legs, at_grip=at_grip, f_pull=f_pull, per_person=per_person,
-                t_walk=t_walk, t_r9=t_r9, t_r9_fast=t_r9_fast, t_r9_sited=t_r9_sited, tip_side=tip_side, tip_back=tip_back,
+    bb = M.Compound([k.shape for k in comps.values()]).bounding_box()
+    return dict(mass=mass, m_water=m_w, cg=cg, on_legs=on_legs, at_grip=at_grip, f_pull=f_pull, per_person=per_person,
+                t_walk=t_walk, t_r9=t_r9, t_r9_sited=t_r9_sited, t_r9_wet=t_r9_wet, t_r9_old=t_r9_old,
+                t_r9_old_fill=t_r9_old_fill, t_fill=t_fill, v_line=v_line * 1000, after=after, before=before,
+                p_one=p_one, v_suc=v_suc * 1000, tip_side=tip_side, tip_back=tip_back,
                 width=bb.size.X, length=bb.size.Y, height=bb.size.Z, rows=rows)
 
 
@@ -220,7 +254,8 @@ def main():
     for key, v in b.items():
         print(f"  {key:12s} {v:10.3f}")
     print("C to E. Cart")
-    for key in ("mass", "on_legs", "at_grip", "f_pull", "per_person", "t_walk", "t_r9", "t_r9_fast", "t_r9_sited", "tip_side",
+    for key in ("mass", "m_water", "on_legs", "at_grip", "f_pull", "per_person", "t_walk", "v_line", "t_fill", "before", "after",
+                "t_r9", "t_r9_sited", "t_r9_wet", "t_r9_old", "t_r9_old_fill", "p_one", "v_suc", "tip_side",
                 "tip_back", "width", "length", "height"):
         print(f"  {key:12s} {c[key]:10.2f}")
     print(f"  cg (mm)      {c['cg'][0]:.0f}, {c['cg'][1]:.0f}, {c['cg'][2]:.0f}")
@@ -240,7 +275,8 @@ def main():
         ("R6", "Cart on a 10 % slope, 100 m", "<= 3 min, width <= 0.9 m", f"{c['t_walk'] / 60:.1f} min at 1.0 m/s; {c['per_person']:.0f} N per person; width {c['width']:.0f} mm", "Met (est.)"),
         ("R7", "Flow for 10 min", ">= 20 L/min", f"{a['q_lmin']:.1f} L/min; {a['p_person']:.0f} W per person", "Met (est.)"),
         ("R8", "Jet reach", ">= 6 m", f"{a['reach']:.1f} m", "Met (est.)"),
-        ("R9", "Water on target 100 m away", "<= 3 min", f"{c['t_r9'] / 60:.1f} min ({c['t_r9_sited'] / 60:.1f} min for a shelter 70 m away with a 30 s muster)", "Not met on paper at 100 m"),
+        ("R9", "Water on target 100 m away", "<= 3 min", f"{c['t_r9'] / 60:.1f} min ({c['t_r9']:.0f} s) at 100 m; {c['t_r9_sited'] / 60:.1f} min at 70 m (siting margin)",
+         "Not met on paper at 100 m (short by {:.0f} s); met at 70 m".format(c['t_r9'] - 180) if c['t_r9'] > 180 else "Met (est.)"),
         ("R10", "Repairable locally", "Hand tools, market parts", "Every wear part is a market item", "Met by design"),
         ("R11", "Value-engineering target", "USD 1,600", f"USD {k['total']:,.0f}", f"USD {k['target'] - k['total']:,.0f} under the target"),
     ]

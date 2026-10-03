@@ -2,7 +2,8 @@
 
 Finished-product look for photoreal renders. Every part is a component of cad/src/model.py components(),
 used as it is, so every main dimension comes from the model: the hose cart (frame, handle, pump stand, reel
-uprights, axle, wheels, pump, relief valve, lever, reel and hoses, tray and its kit), the block station
+uprights, axle, wheels, pump, relief valve, lever, reel and hoses, tray and its kit, and since CBK-DDR-003 the
+suction hose left coupled to the pump inlet and strapped along the left rail), the block station
 (four posts, beams, purlins, roof sheet, alarm box, siren, solar panel, sign, drum) and the heat alarm on a
 bamboo roof pole. Only context is added: packed-earth ground, a 1.75 m mannequin standing beside the drum,
 and a forearm and hand beside the heat alarm. The buried 600 mm of each post and the concrete collars are
@@ -30,7 +31,8 @@ RENDER_VIEWS = [
     {"name": "exploded", "groups": ["cart"], "explode": True, "el": 26, "az": -50,
      "note": "Exploded view of the hose cart from the front right and above (about 26 deg elevation): frame, "
              "handle, pump stand, reel uprights, axle and wheels, hand pump and relief valve, lever, reel and "
-             "hoses, tray with suction hose, strainer, nozzle and tap adaptor"},
+             "hoses, suction hose left coupled to the pump with its two rail straps, tray with the hose coil, check "
+             "foot valve, nozzle and tap adaptor"},
     {"name": "detail", "groups": ["alarm", "hand"], "explode": False, "el": 12, "az": -60,
      "note": "Detail from the front right and slightly below (about 12 deg elevation): one rate-of-rise heat "
              "alarm hung under a bamboo roof pole by two cable ties, sensor guard underneath; forearm and "
@@ -39,7 +41,7 @@ RENDER_VIEWS = [
 
 MAT = {"frame": "painted", "handle": "painted", "stand": "painted", "uprights": "painted", "lever": "painted",
        "reel": "painted", "feet": "rubber", "grips": "rubber", "lever_grips": "rubber", "wheels": "rubber",
-       "wound_hose": "rubber", "conn_hose": "rubber", "suction": "rubber", "tray": "metal", "sheet": "metal",
+       "wound_hose": "rubber", "conn_hose": "rubber", "suction": "rubber", "suction_run": "rubber", "hose_straps": "rubber", "tray": "metal", "sheet": "metal",
        "posts": "painted", "beams": "painted", "purlins": "painted", "station_box": "plastic", "siren": "painted",
        "panel": "screen", "sign": "painted", "drum": "plastic", "al_base": "plastic", "al_cover": "plastic",
        "al_guard": "plastic", "al_ties": "plastic", "al_battery": "plastic", "al_pcb": "plastic", "al_piezo": "metal"}

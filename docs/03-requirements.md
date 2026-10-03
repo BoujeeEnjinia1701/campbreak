@@ -3,7 +3,7 @@ doc_id: CBK-REQ-001
 title: CampBreak requirements
 project: CampBreak
 doc_type: Requirements
-version: "0.3"
+version: "0.4"
 status: Draft
 date: '2026-10-03'
 author: Amish Chadha
@@ -21,11 +21,15 @@ revisions:
   date: '2026-10-03'
   author: Amish Chadha
   change: "TRL 3 with the decisions of CBK-DDR-001 and CBK-DDR-002 applied and results from CBK-CAL-001"
+- version: "0.4"
+  date: '2026-10-03'
+  author: Amish Chadha
+  change: "R9 result after Amish's decision 1A (CBK-DDR-003): check foot valve, suction hose left coupled, go-when-two-arrive rule; delivery hose fill time added. R6 and R11 results updated. Requirement wording unchanged"
 ---
 
 # CampBreak requirements
 
-Measurable requirements for one block kit, with the TRL 3 result from the calculation note CBK-CAL-001. Nine are met on paper or by design, R2 can only be shown in a cooking trial at TRL 4, and **R9 is not met on paper** for a shelter 100 m from the station.
+Measurable requirements for one block kit, with the TRL 3 result from the calculation note CBK-CAL-001. Nine are met on paper or by design, R2 can only be shown in a cooking trial at TRL 4, and **R9 is not met on paper** for a shelter 100 m from the station, now by 11 s.
 
 *Table 1. Requirements and TRL 3 status.*
 
@@ -36,20 +40,21 @@ Measurable requirements for one block kit, with the TRL 3 result from the calcul
 | R3 | Alarm is loud enough to wake the block | At least 85 dB(A) at 3 m | Sound level meter test | 85.5 dB(A) | Met (est.) |
 | R4 | Alarm reaches neighbours and the block station | Every alarm in the block and the station within 10 s | Field test across a mock block layout | 7.2 s worst case | Met (est.) |
 | R5 | Alarm runs without mains power | At least 12 months on batteries | Current draw measurement | Limited by cell shelf life, about 5 years | Met (est.) |
-| R6 | Cart can be moved on camp paths | Two adults move the loaded cart 100 m on an unpaved 10 % slope in 3 minutes or less; cart width 0.9 m or less | Timed trial on a test track | 1.7 min; 89 N per person; 850 mm wide | Met (est.) |
+| R6 | Cart can be moved on camp paths | Two adults move the loaded cart 100 m on an unpaved 10 % slope in 3 minutes or less; cart width 0.9 m or less | Timed trial on a test track | 1.7 min; 92 N per person; 850 mm wide | Met (est.) |
 | R7 | Hand pump delivers useful flow | At least 20 L/min (5.3 US gal/min) at the nozzle, pumped by two people for 10 minutes | Bench flow test with timed volume | 20.4 L/min at 47 W per person | Met (est.) |
 | R8 | Jet reaches a burning shelter from a safe distance | Jet reach of 6 m (20 ft) or more | Measured throw test | 6.9 m | Met (est.) |
-| R9 | Fast deployment | Water on target within 3 minutes of alarm for a shelter 100 m from the station | Timed drill with volunteers | 3.8 min at 100 m; 2.8 min at 70 m with a 30 s muster | **Not met on paper** |
+| R9 | Fast deployment | Water on target within 3 minutes of alarm for a shelter 100 m from the station | Timed drill with volunteers, from the siren, using the go-when-two-arrive rule | 3.2 min (191 s) at 100 m; 2.7 min at 70 m | **Not met on paper** at 100 m (11 s over); met at 70 m |
 | R10 | Repairable locally | All wear parts replaceable with hand tools and parts sold in local markets | Maintenance walkthrough with a camp workshop | Every wear part is a market item | Met by design |
-| R11 | Cost against the value-engineering target | Value-engineering target: USD 1,600 for one block kit | Costed bill of materials | USD 1,355, USD 245 under the target | Met |
+| R11 | Cost against the value-engineering target | Value-engineering target: USD 1,600 for one block kit | Costed bill of materials | USD 1,374, USD 226 under the target | Met |
 
-R9 stays at 100 m. The decided mitigation (CBK-DDR-001, D9) is a siting rule: no shelter more than 70 m along the path from a station, with a drilled 30 s muster.
+R9 stays at 3 minutes and 100 m. On 2026-10-03 Amish chose option A on R9 ("1A 2A 3A 4A 5A 6A 7A 8A 9A 10A 11A"; CBK-DDR-003): a check foot valve so the pump stays primed, the suction hose left coupled to the pump with a cam-lever coupling, and the drilled rule "go when two arrive" with a 30 s gather. That brings the 100 m time from 3.8 min to 3.2 min. The rest of the gap is the 26 s needed to fill the empty 30 m delivery hose, which the earlier figure left out; stowing that hose full as well is posed to Amish in CBK-DEC-001. The siting rule of CBK-DDR-001 (D9), no shelter more than 70 m along the path from a station, is kept as the siting margin; there the time is 2.7 min.
 
 ## Assumptions
 
 - A block has a drum or tap within reach of most shelters, or drums are placed at stations.
 - Camp management allows alarms in shelters and a station in each block.
-- Volunteers are trained and drill regularly, so a 30 s muster is realistic.
+- Volunteers are trained and drill regularly, so the first two reach the station within 30 s of the siren.
+- The foot valve's check holds the pump and suction hose full between uses; the weekly prime check on the drill card confirms it.
 - The estimates marked (est.) in CBK-CAL-001 hold within the margins shown; the pump displacement is the most important one.
 
 ## Safety

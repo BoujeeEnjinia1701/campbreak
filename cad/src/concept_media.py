@@ -92,11 +92,11 @@ def flow():
 
 
 def web():
-    # Coarse mesh (0.5 mm chord, 0.3 rad): the build123d default of 0.001 mm makes a file of several GB here
+    # Coarse mesh (1.0 mm chord, 0.35 rad): the build123d default of 0.001 mm makes a file of several GB here
     import functools
     import build123d
     fine = build123d.export_gltf
-    build123d.export_gltf = functools.partial(fine, linear_deflection=0.5, angular_deflection=0.3)
+    build123d.export_gltf = functools.partial(fine, linear_deflection=1.0, angular_deflection=0.35)
     try:
         return K.export_web_model(parts(), "media", title=f"{PROJECT}: {TITLE}")
     finally:
@@ -109,25 +109,29 @@ def blueprint():
     from drawing import Sheet, project_views
     a, b = sizing.pump(), sizing.alarm()
     c = sizing.cart()
-    ps = [Part(q.name, M.connecting_hose_segments(), q.color, q.bom) if q.name.startswith("Connecting hose") else q
+    swap = {"Connecting hose": M.connecting_hose_segments, "Suction hose run": M.suction_run_segments}
+    ps = [next((Part(q.name, f(), q.color, q.bom) for k, f in swap.items() if q.name.startswith(k)), q)
           for q in parts(("cart",))]
     shown = K.with_scale_figure(ps, gap=900)
-    views = project_views(Compound(children=[p.shape for p in ps]), MD / "_views")
-    views["iso"] = project_views(Compound(children=[p.shape for p in shown]), MD / "_views_fig")["iso"]
-    s = Sheet(project=PROJECT, title="Hand-pumped hose cart for camp blocks: concept", dwg_no=DWG, rev="P1",
+    views = project_views(Compound([p.shape for p in ps]), MD / "_views")
+    views["iso"] = project_views(Compound([p.shape for p in shown]), MD / "_views_fig")["iso"]
+    s = Sheet(project=PROJECT, title="Hand-pumped hose cart for camp blocks: concept", dwg_no=DWG, rev="P2",
               author="Amish Chadha", date=DATE, theme="blueprint", material="Massing model for concept communication",
-              revisions=[("P1", "Concept sheet from the constructable TRL 3 model", DATE, "AC")])
+              revisions=[("P1", "Concept sheet from the constructable TRL 3 model", DATE, "AC"),
+                         ("P2", "Suction hose left coupled, check foot valve (CBK-DDR-003)", DATE, "AC")])
     s.add_ortho(views)
-    s.add_svg(views["iso"], 276, 37, 140, 113, label="Isometric view", sublabel="Not to scale; figure is a 1.75 m person")
+    s.add_svg(views["iso"], 276, 37, 140, 103, label="Isometric view", sublabel="Not to scale; figure is a 1.75 m person")
     s.add_notes("Key figures", [
         f"Cart {c['width']:.0f} wide x {c['length']:.0f} long; about {c['mass']:.0f} kg (est.)",
         f"Two people pull {c['per_person']:.0f} N each on a 10 % slope (est.)",
         f"Hand pump {a['q_lmin']:.1f} L/min at 60 double strokes/min (est.)",
         f"Jet reach about {a['reach']:.1f} m with a 6 mm jet (est.)",
-        "30 m of 19 mm hose on a reel; 4 m suction hose",
+        "30 m of 19 mm hose on a reel; 4 m suction hose left coupled",
+        "Check foot valve keeps the pump primed between uses",
         "Relief valve at 4 bar; one 200 L drum lasts about 10 min",
         f"Heat alarms alert the station in {b['t_total']:.0f} s worst case (est.)",
-        "Block kit: 24 alarms, station, cart; about USD 1,355"], x=276, y=168, width=140)
+        f"Water on target {c['t_r9'] / 60:.1f} min at 100 m, {c['t_r9_sited'] / 60:.1f} min at 70 m (est.)",
+        f"Block kit: 24 alarms, station, cart; about USD {sizing.cost()['total']:,.0f}"], x=276, y=158, width=140)
     s.save(MD / "concept-blueprint")
     shutil.rmtree(MD / "_views", ignore_errors=True)
     shutil.rmtree(MD / "_views_fig", ignore_errors=True)

@@ -4,7 +4,7 @@
 
 ![TRL 3](https://img.shields.io/badge/TRL-3%20of%209-0F766E) ![Hardware: CERN-OHL-S-2.0](https://img.shields.io/badge/hardware-CERN--OHL--S--2.0-111827) ![Software: MIT](https://img.shields.io/badge/software-MIT-111827) [![REUSE compliant](https://github.com/BoujeeEnjinia1701/campbreak/actions/workflows/reuse.yml/badge.svg)](https://github.com/BoujeeEnjinia1701/campbreak/actions/workflows/reuse.yml)
 
-**Area:** Situational field hardware · **TRL:** 3 of 9 (proof of concept on paper; constructable design, plan not yet built) · **Value-engineering target:** USD 1,600 (estimated cost USD 1,355) · **Difficulty:** 2 of 5
+**Area:** Situational field hardware · **TRL:** 3 of 9 (proof of concept on paper; constructable design, plan not yet built) · **Value-engineering target:** USD 1,600 (estimated cost USD 1,374) · **Difficulty:** 2 of 5
 
 Gives camp residents block alarms and a hand-pumped hose cart to fight shelter fires in the first minutes.
 
@@ -67,7 +67,7 @@ Full design precis: [docs/02-concept.md](docs/02-concept.md) · Requirements: [d
 - 30 m of 19 mm hose on a reel, jet and spray nozzle
 - 4 m suction hose with foot valve strainer, quick couplings and a tap adaptor
 
-Key figures at TRL 3 (estimates): about 20 L/min at the nozzle with two people pumping, a jet reach of about 6.9 m, an alarm relay of 7.2 s, and a 91 kg cart two people pull up a 10 % slope. Water on target within 3 minutes is not met on paper for a shelter 100 m away (3.8 min); stations are sited within 70 m of every shelter (2.8 min).
+Key figures at TRL 3 (estimates): about 20 L/min at the nozzle with two people pumping, a jet reach of about 6.9 m, an alarm relay of 7.2 s, and a 95 kg cart two people pull up a 10 % slope. A check foot valve keeps the pump primed, the suction hose stays coupled, and volunteers go when two arrive. Water on target within 3 minutes is still not met on paper for a shelter 100 m away (3.2 min); stations are sited within 70 m of every shelter (2.7 min).
 
 ## Building the prototype
 

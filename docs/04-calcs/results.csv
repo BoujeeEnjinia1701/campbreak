@@ -4,9 +4,9 @@ R2,No alarm in 1 h of cooking at 1 m,No alarm,Not calculable on paper,To show at
 R3,Sound at 3 m,>= 85 dB(A),85.5 dB(A),Met (est.)
 R4,Relay to station and all alarms,<= 10 s,7.2 s worst case,Met (est.)
 R5,Battery life,>= 12 months,331 months; shelf life of the cells limits it to about 5 years,Met (est.)
-R6,"Cart on a 10 % slope, 100 m","<= 3 min, width <= 0.9 m",1.7 min at 1.0 m/s; 89 N per person; width 850 mm,Met (est.)
+R6,"Cart on a 10 % slope, 100 m","<= 3 min, width <= 0.9 m",1.7 min at 1.0 m/s; 92 N per person; width 850 mm,Met (est.)
 R7,Flow for 10 min,>= 20 L/min,20.4 L/min; 47 W per person,Met (est.)
 R8,Jet reach,>= 6 m,6.9 m,Met (est.)
-R9,Water on target 100 m away,<= 3 min,3.8 min (2.8 min for a shelter 70 m away with a 30 s muster),Not met on paper at 100 m
+R9,Water on target 100 m away,<= 3 min,3.2 min (191 s) at 100 m; 2.7 min at 70 m (siting margin),Not met on paper at 100 m (short by 11 s); met at 70 m
 R10,Repairable locally,"Hand tools, market parts",Every wear part is a market item,Met by design
-R11,Value-engineering target,"USD 1,600","USD 1,355",USD 245 under the target
+R11,Value-engineering target,"USD 1,600","USD 1,374",USD 226 under the target

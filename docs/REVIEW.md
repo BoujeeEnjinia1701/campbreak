@@ -101,3 +101,38 @@ Photoreal renders and storefront images on Amish's Mac (`/render-product`). TRL 
 ## 2026-10-03: photoreal renders
 
 Rendered with Blender Cycles on Amish's Mac from `cad/src/product_model.py`; captioned with `.kit/photo_caption.py`; `media/card.png` and `media/social-preview.png` made with `.kit/cards.py`. Views: hero, exploded, detail. image_qc passes and `render.py --check` has no FAIL.
+
+## 2026-10-03: Amish's requirement decisions carried out
+
+Amish, 2026-10-03: "1A 2A 3A 4A 5A 6A 7A 8A 9A 10A 11A". For CampBreak this is decision 1A on R9 (water on target within 3 min at 100 m), recorded in `docs/decisions/0003-r9-response-time.md` (CBK-DDR-003) and in the register `docs/06-design-decisions.md` (CBK-DEC-001 v0.2).
+
+### Changes made, with the new result for each
+
+| Change | Files | New result |
+| --- | --- | --- |
+| Brass spring-loaded foot valve with a positive-seal check, so the pump and suction hose stay primed | `cad/src/model.py`, `bom/bom.csv` line 13 (USD 40, was 28) | No priming at the fire; suction loss factor raised to 7.0 (est.); R7 flow unchanged at 20.4 L/min, 47 W per person |
+| Suction hose left coupled to the pump inlet by its cam-lever adaptor with a 90° elbow tail, run along the top of the left rail under two rubber straps and onto its coil in the tray | `cad/src/model.py` (new parts `suction_adaptor`, `suction_run`, `hose_straps`; 18 new checks, 115 of 115 pass), STEP and STL, `bom/bom.csv` lines 14 and 20 (new, USD 5) | Clears the wheels by 20 mm, the ground by 173 mm and the swung lever by 166 mm; tightest hose bend 63 mm radius |
+| "Go when two arrive" with a 30 s gather on a laminated drill card, the station sign and in the build plan | `docs/05-build-plan.md` section 5a (drill card), Step 12, first checks; sign sketch CBK-DWG-111; `bom/bom.csv` line 18 (USD 27, was 25) | Gather 30 s instead of the 60 s muster |
+| R9 recomputed (CBK-CAL-001 v0.2, section E), now with the 26 s to fill the empty 30 m delivery hose, which v0.1 left out | `docs/04-calcs/sizing.py`, `01-sizing.md`, `results.csv`; `docs/03-requirements.md` v0.4 (wording unchanged, result updated) | **R9 at 100 m: 191 s (3.2 min) against 180 s, still not met on paper, 11 s over** (3.8 min before; 4.2 min like for like with the fill counted). At 70 m, the siting margin kept: 161 s (2.7 min), met |
+| Cart mass and pull | `sizing.py`, `01-sizing.md` | 94.6 kg stowed primed (was 91.4), including 2.6 kg of water; 92 N per person on a 10 % slope; R6 still met (1.7 min) |
+| Cost | `bom/bom.csv` | Value-engineering target: USD 1,600. Estimated cost of the constructable design: USD 1,374 (USD 226 under the target). `budget_usd` unchanged |
+
+Pictures changed: general arrangement CBK-DWG-001 (Rev P2), concept sheet CBK-DWG-010 (Rev P2), `media/hero.png`, `media/exploded.png`, `media/model.glb`, build plan overview, sign sketch CBK-DWG-111, new joint 12 (Figure 17; later figures renumbered), Step 6 to Step 17. Documents also updated: `docs/02-concept.md` v0.4, `docs/01-problem.md` v0.4 (cost), `README.md`, `project.yaml` (evidence), `cad/src/product_model.py` (materials for the new parts; scenes re-exported to `/home/claude/renders/campbreak`). `Compound(children=...)` replaced by `Compound([...])` in the scripts.
+
+### Decision proposed, awaiting Amish
+
+Stow the 30 m delivery hose full of water as well (CBK-DEC-001, open decision 1). Options: (a) leave as is, R9 not met at 100 m by 11 s, the 70 m margin holds; (b) stow the hose full behind the shut nozzle: 177 s (2.95 min) at 100 m, met with 3 s to spare, 8.9 kg more on the cart (about 101 N per person on a 10 % slope, just over the 100 N assumed sustainable), no new parts; (c) restate R9 to 3.25 min. Recommendation: (b).
+
+### Safety
+
+- The first pumper works alone for a minute or two until others arrive, at about 95 W, above the 75 W assumed sustainable for 10 min (est.); the drill checks it.
+- "Go when two arrive" never means one person with the cart or running with it; people leave the shelter first. Both are on the drill card.
+- The foot valve's seal is now a working part; the weekly prime check on the drill card finds a leak.
+
+### Recommended next step
+
+Amish decides open decision 1. TRL 4 (build and test to CBK-BLD-001, including the week-long prime hold and the timed drill at 70 m and 100 m) needs a new instruction from Amish.
+
+## 2026-10-03: photoreal renders redone after Amish's requirement decisions
+
+Rendered with Blender Cycles on Amish's Mac from `cad/src/product_model.py`; captioned with `.kit/photo_caption.py`; `media/card.png` and `media/social-preview.png` made with `.kit/cards.py`. Views: hero, exploded, detail. image_qc passes and `render.py --check` has no FAIL.

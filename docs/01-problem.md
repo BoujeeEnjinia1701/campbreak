@@ -3,7 +3,7 @@ doc_id: CBK-PRB-001
 title: CampBreak problem statement
 project: CampBreak
 doc_type: Problem statement
-version: "0.3"
+version: "0.4"
 status: Draft
 date: '2026-10-03'
 author: Amish Chadha
@@ -21,6 +21,10 @@ revisions:
   date: '2026-10-03'
   author: Amish Chadha
   change: "TRL 3 with the decisions of CBK-DDR-001 and CBK-DDR-002 applied and results from CBK-CAL-001"
+- version: "0.4"
+  date: '2026-10-03'
+  author: Amish Chadha
+  change: "Estimated cost updated after Amish's R9 decision (CBK-DDR-003)"
 ---
 
 # CampBreak problem statement
@@ -52,7 +56,7 @@ Parts of the answer exist separately. Lumkani's networked heat detectors raise t
 
 ## Constraints
 
-- Value-engineering target of USD 1,600 for one block kit (24 alarms, one station and one hose cart), a hypothetical control target rather than a limit; off-the-shelf parts and workshop fabrication. Estimated cost of the constructable design: USD 1,355 (USD 245 under the target).
+- Value-engineering target of USD 1,600 for one block kit (24 alarms, one station and one hose cart), a hypothetical control target rather than a limit; off-the-shelf parts and workshop fabrication. Estimated cost of the constructable design: USD 1,374 (USD 226 under the target).
 - Hand-powered pumping only; no fuel engine on the cart.
 - Cart must be moved by two adults on the paths above.
 - Alarm detection by rate of rise of temperature, not smoke, to avoid cooking false alarms.

@@ -3,7 +3,7 @@ doc_id: CBK-BLD-001
 title: CampBreak prototype build plan
 project: CampBreak
 doc_type: Build plan
-version: "0.1"
+version: "0.2"
 status: Draft
 date: '2026-10-03'
 author: Amish Chadha
@@ -13,6 +13,10 @@ revisions:
     date: '2026-10-03'
     author: Amish Chadha
     change: First build plan; design made constructable (CBK-DDR-002)
+  - version: "0.2"
+    date: '2026-10-03'
+    author: Amish Chadha
+    change: "Amish's R9 decision 1A (CBK-DDR-003): check foot valve, suction hose left coupled to the pump and strapped to the rail, go-when-two-arrive drill card"
 ---
 
 # CampBreak prototype build plan
@@ -25,9 +29,9 @@ revisions:
 
 *Figure 1. Every component pulled apart and numbered in build order: the hose cart (1 to 12), the block station (13 to 18) and one heat alarm (19, drawn five times its size).*
 
-The prototype is one block kit: a two-wheeled hose cart with a hand pump, a shaded block station for the cart with a siren and a water drum, and a heat alarm of the kind hung in each shelter (a drill block has 24). Figure 1 shows the 19 component groups in the order you make or fit them. The made parts are the welded cart frame, handle, pump stand and reel uprights, the axle and spindle pieces, the lever extension, a folded sheet-steel hose tray, the four station posts with their roof frame, the sign and the alarm's mounting plate and drilled box. Everything else is bought and fitted: wheels, pump, relief valve, reel drum, hoses, nozzle, couplings, roof sheet, drum, the station's box, battery, siren and panel, and the alarm's board, cells and sounder. The work is sawing, drilling and MIG welding mild steel tube and plate, folding thin sheet, pouring four concrete collars, and drilling plastic boxes. The parts cost about USD 1,355 from the bill of materials.
+The prototype is one block kit: a two-wheeled hose cart with a hand pump, a shaded block station for the cart with a siren and a water drum, and a heat alarm of the kind hung in each shelter (a drill block has 24). Figure 1 shows the 19 component groups in the order you make or fit them. The made parts are the welded cart frame, handle, pump stand and reel uprights, the axle and spindle pieces, the lever extension, a folded sheet-steel hose tray, the four station posts with their roof frame, the sign and the alarm's mounting plate and drilled box. Everything else is bought and fitted: wheels, pump, relief valve, reel drum, hoses, nozzle, couplings, roof sheet, drum, the station's box, battery, siren and panel, and the alarm's board, cells and sounder. The work is sawing, drilling and MIG welding mild steel tube and plate, folding thin sheet, pouring four concrete collars, and drilling plastic boxes. The parts cost about USD 1,374 from the bill of materials.
 
-> **Safety:** The finished cart is a pressurised water system: two people can push the pump to several bar against a shut nozzle, so the 4 bar relief valve must be fitted before the first pumping, discharge pointing at the ground. Welding needs a screen, gloves, a mask and a fire watch; grind and weld well away from fuel and shelters. The loaded cart weighs about 91 kg: two people lift and move it. The station roof is put up from a stepladder by two people, never in wind. The station battery is sealed lead-acid: connect its fuse last.
+> **Safety:** The finished cart is a pressurised water system: two people can push the pump to several bar against a shut nozzle, so the 4 bar relief valve must be fitted before the first pumping, discharge pointing at the ground. Welding needs a screen, gloves, a mask and a fire watch; grind and weld well away from fuel and shelters. The loaded cart weighs about 95 kg, with its pump and suction hose kept full of water: two people lift and move it. The station roof is put up from a stepladder by two people, never in wind. The station battery is sealed lead-acid: connect its fuse last.
 
 ## 2. What changed to make it buildable
 
@@ -46,8 +50,9 @@ The concept showed what the kit does; its parts were blocks with no stock size a
 | Reel | A cylinder, no support | A bought drum on a 25 mm spindle in two welded uprights with a swivel inlet (Figure 9) | The hose pays out while the pump stays connected |
 | Pump to reel | Nothing | A 1.2 m connecting hose and the 4 bar relief valve on a tee (Figure 16) | The relief water goes to the ground |
 | Small parts | Loose | A folded tray bolted to the bearers (Figures 13 and 14) | Everything travels on the cart and drains |
-| Station | Two posts holding a cantilever roof | Four posts in concrete collars, two beams, four purlins and a sheet (Figures 17 to 20) | Resists monsoon uplift with plain bolts and welds |
-| Heat alarm | A box glued to the roof | An aluminium plate on the box, hung on a roof pole by two ties (Figures 23 and 24) | Fits any bamboo pole; no screws into bamboo |
+| Station | Two posts holding a cantilever roof | Four posts in concrete collars, two beams, four purlins and a sheet (Figures 18 to 21) | Resists monsoon uplift with plain bolts and welds |
+| Suction hose | Coiled loose in the tray, coupled and primed at the fire | Left coupled to the pump inlet, strapped along the left rail, with a check foot valve that keeps the pump full (Figure 17; CBK-DDR-003) | Nothing to couple or prime at the fire: water about 30 s sooner |
+| Heat alarm | A box glued to the roof | An aluminium plate on the box, hung on a roof pole by two ties (Figures 24 and 25) | Fits any bamboo pole; no screws into bamboo |
 
 ## 3. Making the components
 
@@ -235,8 +240,10 @@ What to buy for the cart (full specifications in the bill of materials), and wha
 - **Hand pump:** a cast-iron double-acting semi-rotary pump with 25 mm ports, at least 0.40 L per double stroke and rated for at least 40 m head. Measure its flange holes and handle socket before drilling the stand plate (3.3) and boring the lever hub (3.7).
 - **Relief valve:** a 19 mm spring relief valve set at 4 bar, with a tee. Fit it at the pump outlet with the discharge pointing down.
 - **Reel drum:** a steel reel drum with a 200 mm core and 500 mm flanges, 210 apart, and a 19 mm swivel inlet with a hose tail.
-- **Hoses:** 30 m of 19 mm semi-rigid hose rated at least 10 bar; 1.2 m of 19 mm reinforced hose and two clips for the pump to reel connection; 4 m of 25 mm wire-reinforced suction hose with a foot valve strainer and a quick coupling.
-- **Nozzle, couplings and tap adaptor:** a jet and spray nozzle with shut-off and a 6 mm jet; three 25 mm cam-lever coupling sets; a push-on tap connector to a 25 mm hose tail.
+- **Hoses:** 30 m of 19 mm semi-rigid hose rated at least 10 bar; 1.2 m of 19 mm reinforced hose and two clips for the pump to reel connection; 4 m of 25 mm wire-reinforced suction hose that bends to 60 mm radius or less.
+- **Foot valve:** a 25 mm brass spring-loaded foot valve with a check that seals and a stainless strainer. It keeps the suction hose and the pump full of water between uses. Before you buy, fill one on its hose, hang it up and see that it holds water overnight.
+- **Nozzle, couplings and tap adaptor:** a jet and spray nozzle with shut-off and a 6 mm jet; three 25 mm cam-lever coupling sets, the suction hose's one with a 90° elbow hose tail; a push-on tap connector to a 25 mm hose tail.
+- **Hose straps:** two rubber straps with buckles, 20 mm wide, long enough to go round the rail and the hose.
 
 ![Figure 15. Joint 1: axle, axle plates, spacer and wheel hub (cut open)](05-build-plan/joint-01.png)
 
@@ -246,11 +253,15 @@ What to buy for the cart (full specifications in the bill of materials), and wha
 
 *Figure 16. Seen from the back right: the relief valve sits on a tee at the pump outlet with its discharge pointing down; the connecting hose runs from the outlet tail over to the reel swivel, a clip at each end.*
 
+![Figure 17. Joint 12: suction hose left coupled to the pump inlet](05-build-plan/joint-12.png)
+
+*Figure 17. Seen from the back left: the suction hose's adaptor stays locked in the coupler under the pump. Its elbow sends the hose left, up behind the end of the left rail and forward along the rail top, under a rubber strap. The foot valve at the far end keeps the hose and the pump full of water.*
+
 ### 3.10 Station posts and concrete collars
 
-![Figure 17. Making sketch of the station posts](../cad/drawings/CBK-DWG-109.png)
+![Figure 18. Making sketch of the station posts](../cad/drawings/CBK-DWG-109.png)
 
-*Figure 17. Station posts making sketch (CBK-DWG-109), left pair drawn.*
+*Figure 18. Station posts making sketch (CBK-DWG-109), left pair drawn.*
 
 **What it is and what it is made from.** Four posts of 60 x 60 x 3 mm square tube, two front posts 3,160 long and two back posts 3,000 long, each set 600 into a concrete collar 300 across. Four bags of concrete and some gravel.
 
@@ -265,17 +276,17 @@ What to buy for the cart (full specifications in the bill of materials), and wha
 
 **How it fits the parts next to it.**
 
-![Figure 18. Joint 8: station post in its concrete collar (cut open)](05-build-plan/joint-08.png)
+![Figure 19. Joint 8: station post in its concrete collar (cut open)](05-build-plan/joint-08.png)
 
-*Figure 18. The post stands 600 into its collar; the top of the collar is ground level.*
+*Figure 19. The post stands 600 into its collar; the top of the collar is ground level.*
 
 **Check before moving on.** Each post is plumb within 5 mm over 2 m; the back post tops are 2,400 above the ground.
 
 ### 3.11 Roof frame: beams, purlins and sheet
 
-![Figure 19. Making sketch of the roof frame](../cad/drawings/CBK-DWG-110.png)
+![Figure 20. Making sketch of the roof frame](../cad/drawings/CBK-DWG-110.png)
 
-*Figure 19. Roof beams and purlins making sketch (CBK-DWG-110).*
+*Figure 20. Roof beams and purlins making sketch (CBK-DWG-110).*
 
 **What it is and what it is made from.** Two beams of 40 x 40 x 2 mm tube, 2,000 long; four purlins of 40 x 20 x 2 mm tube, 1,500 long; one corrugated galvanised sheet 1,500 x 2,050; angle cleats, M8 bolts and roofing screws.
 
@@ -288,17 +299,17 @@ What to buy for the cart (full specifications in the bill of materials), and wha
 
 **How it fits the parts next to it.**
 
-![Figure 20. Joint 9: roof beam, purlin and sheet on a back post](05-build-plan/joint-09.png)
+![Figure 21. Joint 9: roof beam, purlin and sheet on a back post](05-build-plan/joint-09.png)
 
-*Figure 20. The beam sits on the cut post top; the purlins sit on the beams; the sheet sits on the purlins.*
+*Figure 21. The beam sits on the cut post top; the purlins sit on the beams; the sheet sits on the purlins.*
 
 **Check before moving on.** The roof falls 5° to the back and does not move when pushed at a corner.
 
 ### 3.12 Station sign
 
-![Figure 21. Making sketch of the station sign](../cad/drawings/CBK-DWG-111.png)
+![Figure 22. Making sketch of the station sign](../cad/drawings/CBK-DWG-111.png)
 
-*Figure 21. Station sign making sketch (CBK-DWG-111).*
+*Figure 22. Station sign making sketch (CBK-DWG-111).*
 
 **What it is and what it is made from.** A 440 x 300 x 3 mm aluminium sheet with printed instructions in the camp languages and pictograms.
 
@@ -321,9 +332,9 @@ What to buy for the cart (full specifications in the bill of materials), and wha
 
 ### 3.14 Heat alarm: mounting plate, box and guard
 
-![Figure 22. Making sketch of the heat alarm housing](../cad/drawings/CBK-DWG-112.png)
+![Figure 23. Making sketch of the heat alarm housing](../cad/drawings/CBK-DWG-112.png)
 
-*Figure 22. Heat alarm housing making sketch (CBK-DWG-112).*
+*Figure 23. Heat alarm housing making sketch (CBK-DWG-112).*
 
 **What it is and what it is made from.** A 140 x 50 x 3 mm aluminium plate, a stock two-part ABS box 100 x 100 x 40, and a small printed guard cup in PETG. Bought parts inside: the alarm board (low-power controller and sub-GHz radio with a thermistor input), a thermistor on a 40 mm lead, a piezo sounder of at least 95 dB(A) at 1 m, a 3 x AA holder with alkaline cells, four standoffs, and two UV-stable cable ties.
 
@@ -337,13 +348,13 @@ What to buy for the cart (full specifications in the bill of materials), and wha
 
 **How it fits the parts next to it.**
 
-![Figure 23. Joint 10: heat alarm under a roof pole](05-build-plan/joint-10.png)
+![Figure 24. Joint 10: heat alarm under a roof pole](05-build-plan/joint-10.png)
 
-*Figure 23. Two ties go round the pole, down through the plate slots and tight under the plate.*
+*Figure 24. Two ties go round the pole, down through the plate slots and tight under the plate.*
 
-![Figure 24. Joint 11: inside the heat alarm (cut open)](05-build-plan/joint-11.png)
+![Figure 25. Joint 11: inside the heat alarm (cut open)](05-build-plan/joint-11.png)
 
-*Figure 24. The board sits on standoffs 12 clear of the battery holder; the thermistor bead hangs in the guard below the box, in moving air.*
+*Figure 25. The board sits on standoffs 12 clear of the battery holder; the thermistor bead hangs in the guard below the box, in moving air.*
 
 **Check before moving on.** The cover closes on its seal with nothing pinched; the bead does not touch the guard.
 
@@ -387,7 +398,7 @@ Grease the axle. Slide it through all four axle plates. On each side fit a space
 
 ![Step 6](05-build-plan/step-06.png)
 
-Two people lift the pump (about 14 kg) onto the back of the stand plate and fit four M12 x 40 bolts with washers both sides. Fit the 25 mm quick coupling and its dust cap to the inlet.
+Two people lift the pump (about 14 kg) onto the back of the stand plate and fit four M12 x 40 bolts with washers both sides. Fit the 25 mm cam-lever coupler to the inlet, pointing down.
 
 ### Step 7: Relief valve
 
@@ -425,7 +436,9 @@ Bolt the tray to the bearers with four M8 bolts, washers and nyloc nuts.
 
 ![Step 12](05-build-plan/step-12.png)
 
-Coil the suction hose in the tray with its coupling end on top. Lay the strainer and tap adaptor inside the coil. Stow the nozzle in the tray when the hose is wound. Fit the reflective tape and the pump instruction label.
+Fit the foot valve to one end of the suction hose and the cam-lever adaptor with its elbow to the other. Push the adaptor into the coupler under the pump and close both cam levers; it stays coupled from now on. Lead the hose to the left, up behind the end of the left rail and forward along the rail top, and fasten it with the two rubber straps. Coil the rest in the tray with the foot valve on top, and lay the tap adaptor inside the coil. Stow the nozzle in the tray when the hose is wound. Fit the reflective tape and the pump instruction label.
+
+**Prime it once.** Stand the foot valve in a bucket of water and pump until water comes out of the nozzle, then lift the foot valve out. From now on the check in the foot valve keeps the pump and the suction hose full (see the weekly check on the drill card, section 5a). Run out the 30 m hose, let it drain and wind it back on.
 
 ### Step 13: Posts in their collars
 
@@ -500,7 +513,23 @@ These are listed here and recorded at TRL 4 in a test report.
 | Alarm sound | R3 | Sound meter at 3 m | 85 dB(A) or more |
 | Relay | R4 | Trigger one alarm in a mock block | Station siren and every alarm within 10 s |
 | Cooking | R2 | One hour of stove cooking 1 m from an alarm in a mock shelter | No alarm |
-| Drill | R9 | Timed drill from alarm to water on target at 70 m and 100 m | 3 min or less at 70 m |
+| Pump stays primed | R9 | Leave the primed cart a week, drop the foot valve in a drum and pump | The lever takes load within 3 strokes; water at the nozzle in about 30 s; no drip from the foot valve |
+| Drill | R9 | Timed drill from the siren to water on target at 70 m and 100 m, using the drill card | 3 min or less at 70 m; time at 100 m recorded against 3 min |
+
+## 5a. Drill card
+
+The drill card is printed in the camp languages, laminated and kept in the station box; the station sign carries the first line. Volunteers practise it until the first two are away with the cart within 30 s of the siren.
+
+*Table 3. Drill card.*
+
+| When | What to do |
+| --- | --- |
+| Siren sounds | Everyone in the burning shelter and its neighbours gets out first. Volunteers go to the station |
+| At the station | **Go when two arrive.** The first two volunteers take the cart out at once; do not wait for more. Never more than 30 s from the siren. Two people always move the cart; never run with it |
+| Others | Follow to the fire; take over the second side of the pump lever when you arrive |
+| At the fire | Park the cart on its feet, upwind, at least 6 m from the fire. Person 1: lift the suction hose off the rail, drop the foot valve in the drum or water, and start pumping; it is already coupled and primed. Person 2: run out the hose from the reel and aim at the base of the fire |
+| Never | Water on burning oil or live wiring. Go into a burning shelter |
+| Every week | Prime check: drop the foot valve in the station drum and pump. The lever should take load within three strokes and water reach the nozzle in about 30 s. If not, re-prime (Step 12) and report the foot valve |
 
 ## 6. Safety stops
 
@@ -523,9 +552,9 @@ Work stops at each point below until what is listed is true.
 
 ## 8. Where the numbers come from
 
-- Model: `cad/src/model.py` (constructable design and its 97 constructability checks)
+- Model: `cad/src/model.py` (constructable design and its 115 constructability checks)
 - General arrangement: `cad/drawings/CBK-DWG-001` (from `cad/src/sheets.py`)
 - Making sketches and pictures: `cad/drawings/CBK-DWG-101` to `112` and `docs/05-build-plan/` (from `cad/src/build_plan_media.py`)
 - Calculations: `docs/04-calcs/01-sizing.md` (CBK-CAL-001) and `docs/04-calcs/sizing.py`
 - Bill of materials: `bom/bom.csv`
-- Decision records: `docs/decisions/0001-trl2-review-decisions.md` and `docs/decisions/0002-design-for-construction.md`
+- Decision records: `docs/decisions/0001-trl2-review-decisions.md`, `docs/decisions/0002-design-for-construction.md` and `docs/decisions/0003-r9-response-time.md`

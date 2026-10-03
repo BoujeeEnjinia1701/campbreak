@@ -3,7 +3,7 @@ doc_id: CBK-PRC-001
 title: CampBreak design precis
 project: CampBreak
 doc_type: Precis
-version: "0.3"
+version: "0.4"
 status: Draft
 date: '2026-10-03'
 author: Amish Chadha
@@ -21,6 +21,10 @@ revisions:
   date: '2026-10-03'
   author: Amish Chadha
   change: "TRL 3 with the decisions of CBK-DDR-001 and CBK-DDR-002 applied and results from CBK-CAL-001"
+- version: "0.4"
+  date: '2026-10-03'
+  author: Amish Chadha
+  change: "Amish's R9 decision 1A (CBK-DDR-003): check foot valve, suction hose left coupled, go when two arrive; figures updated"
 ---
 
 # CampBreak design precis
@@ -53,7 +57,7 @@ Each shelter in a block gets a battery heat alarm hung under a roof pole. When t
 | 7 | Wheels | Two 400 mm puncture-proof wheels on a 20 mm through axle |
 | 8, 9 | Hand pump and lever | Cast-iron double-acting semi-rotary pump, 25 mm ports, with a T-bar lever for two people |
 | 10, 11 | Reel and hose | 30 m of 19 mm semi-rigid hose on a reel with a swivel inlet, fed from the pump by a short connecting hose |
-| 12 to 15 | Nozzle, suction hose, couplings, tap adaptor | Jet and spray nozzle with shut-off; 4 m of 25 mm suction hose with a foot valve strainer; quick couplings; a push-on tap adaptor |
+| 12 to 15, 20 | Nozzle, suction hose, couplings, tap adaptor, hose straps | Jet and spray nozzle with shut-off; 4 m of 25 mm suction hose with a brass check foot valve, left coupled to the pump inlet and strapped along the left rail so the pump stays primed; cam-lever couplings; a push-on tap adaptor |
 | 16 | Hose tray | Folded galvanised tray on the cart that carries the suction hose and small parts |
 | 19 | Relief valve | 4 bar spring relief valve at the pump outlet |
 
@@ -74,8 +78,13 @@ All decided under Amish's 2026-10-03 pre-approval (CBK-DDR-001 and CBK-DDR-002):
 3. **A bought pump.** A semi-rotary wing pump is sold in most target markets and is repaired with hand tools.
 4. **No lithium cells.** Alkaline cells in the alarms and a sealed lead-acid battery at the station.
 5. **Relief valve at 4 bar** so a shut nozzle cannot over-pressure the hose or fittings.
-6. **A cart two people can pull,** 850 mm wide, about 91 kg loaded, on 400 mm puncture-proof wheels.
-7. **Stations sited within 70 m of every shelter,** with a drilled 30 s muster, to get water on target within 3 minutes.
+6. **A cart two people can pull,** 850 mm wide, about 95 kg loaded and primed, on 400 mm puncture-proof wheels.
+7. **Stations sited within 70 m of every shelter** as the siting margin for the 3 minute target.
+
+Decided by Amish on 2026-10-03 ("1A 2A 3A 4A 5A 6A 7A 8A 9A 10A 11A"; CBK-DDR-003):
+
+8. **A primed pump and a coupled suction hose.** A check foot valve keeps the pump and suction hose full, and the hose stays coupled to the pump, so nothing is coupled or primed at the fire.
+9. **Go when two arrive.** The first two volunteers at the station take the cart, within 30 s of the siren; the rule is drilled and printed on the drill card.
 
 ## First-order numbers
 
@@ -91,12 +100,12 @@ All decided under Amish's 2026-10-03 pre-approval (CBK-DDR-001 and CBK-DDR-002):
 | Alarm sound at 3 m | 85.5 dB(A) | 95 dB(A) at 1 m |
 | Alarm relay, worst case | 7.2 s | Three retries, station broadcast heard within 4 s |
 | Alarm battery life | Cell shelf life (about 5 years) | 6.9 µA average |
-| Cart mass, loaded and dry | 91 kg | Catalogue masses for bought parts |
-| Pull on a 10 % slope | 89 N per person | Rolling resistance 0.10 |
-| Water on target | 3.8 min at 100 m; 2.8 min at 70 m with a 30 s muster | 1.0 m/s walking |
-| Block kit cost | USD 1,355 | bom/bom.csv |
+| Cart mass, loaded and primed | 95 kg | Catalogue masses for bought parts; 2.6 kg of water in the pump and suction hose |
+| Pull on a 10 % slope | 92 N per person | Rolling resistance 0.10 |
+| Water on target | 3.2 min at 100 m; 2.7 min at 70 m | 1.0 m/s walking, 30 s gather, 26 s to fill the delivery hose |
+| Block kit cost | USD 1,374 | bom/bom.csv |
 
-Value-engineering target: USD 1,600. Estimated cost of the constructable design: USD 1,355 (USD 245 under the target).
+Value-engineering target: USD 1,600. Estimated cost of the constructable design: USD 1,374 (USD 226 under the target).
 
 ## Patent design-arounds
 
@@ -119,7 +128,7 @@ From the preliminary patent, trademark and prior-art screen (not legal advice):
 
 > **Safety:** The station battery is sealed lead-acid: fuse it at the terminal, keep it in the locked box, and recycle it through a battery dealer. The alarms use alkaline AA cells; follow the camp's disposal rules. There are no lithium cells in the kit.
 
-> **Safety:** The loaded cart weighs about 91 kg. Two people pull it; on slopes steeper than 10 % a third person holds it back. Park it on its feet with the handle down.
+> **Safety:** The loaded cart weighs about 95 kg. Two people pull it; on slopes steeper than 10 % a third person holds it back. Park it on its feet with the handle down.
 
 This design is published as an open engineering reference by Design Molecule Labs. It is not certified equipment.
 
