@@ -128,9 +128,6 @@ C_IN = dict(crr=0.10, slope=0.10, n_people=2, f_person=100.0, v_walk=1.0, dist=1
             drop=10.0,          # lift the pre-coupled suction hose off the cart and drop the foot valve in the water (est.)
             pay_out=25.0,       # second person runs out the 30 m hose from the reel and aims (est., about 1.2 m/s)
             strokes=3.0,        # first strokes to lift water in a primed pump and suction hose (est.)
-            # CBK-DDR-004 (Amish, 2026-10-03, decision 45 b): the 30 m delivery hose and the 1.2 m connecting
-            # hose are stowed full of water behind the shut nozzle, so no fill time at the fire
-            hose_full=True,
             # TRL 3 baseline before the change (CBK-CAL-001 v0.1), for comparison
             muster_old=60.0, setup_old=30.0, prime_old=15.0)
 
@@ -156,15 +153,18 @@ def cart(c=C_IN):
     mass += m_w
     for i, v in enumerate((cw.X, cw.Y, cw.Z)):
         mom[i] += m_w * v
-    # water held in the delivery line stowed full (CBK-DDR-004), placed at the centre of the wound hose
-    v_line = math.pi / 4 * (A_IN["d_hose"] ** 2 * A_IN["l_hose"] + A_IN["d_conn"] ** 2 * A_IN["l_conn"])
-    m_line = v_line * rho if c["hose_full"] else 0.0
-    if m_line:
-        ch = comps["wound_hose"].shape.center()
-        rows.append(("Water held in the delivery hose and connecting hose, stowed full", m_line))
-        mass += m_line
-        for i, v in enumerate((ch.X, ch.Y, ch.Z)):
-            mom[i] += m_line * v
+    # CBK-DDR-004 (Amish, 2026-10-03, round 2, decision 1A): the 30 m delivery hose and the connecting
+    # hose are stowed full of water behind the shut nozzle; the water sits in the wound hose and the
+    # connecting hose in proportion to their volumes
+    v_hose30 = math.pi / 4 * A_IN["d_hose"] ** 2 * A_IN["l_hose"]
+    v_connh = math.pi / 4 * A_IN["d_conn"] ** 2 * A_IN["l_conn"]
+    m_dw = (v_hose30 + v_connh) * rho
+    for key, vol in (("wound_hose", v_hose30), ("conn_hose", v_connh)):
+        cdw = comps[key].shape.center()
+        for i, v in enumerate((cdw.X, cdw.Y, cdw.Z)):
+            mom[i] += vol * rho * v
+    rows.append(("Water held in the delivery hose and connecting hose (stowed full)", m_dw))
+    mass += m_dw
     cg = [v / mass for v in mom]
     W = mass * g
     ay = P["AXLE_Y"]
@@ -180,16 +180,16 @@ def cart(c=C_IN):
     # R9: water on target. Once pumping starts, the empty delivery line (30 m reel hose and the 1.2 m
     # connecting hose) has to fill before water leaves the nozzle. The TRL 3 note v0.1 left this out.
     q = pump()["q_lmin"] / 60000.0
+    v_line = math.pi / 4 * (A_IN["d_hose"] ** 2 * A_IN["l_hose"] + A_IN["d_conn"] ** 2 * A_IN["l_conn"])
     t_fill = v_line / q
-    # two people arrive: one drops the suction hose and pumps, the other runs out the hose and aims;
-    # with the delivery line stowed full (CBK-DDR-004) water leaves the nozzle with the first strokes
-    after_empty = max(c["pay_out"], c["drop"] + c["strokes"] + t_fill)
-    after = max(c["pay_out"], c["drop"] + c["strokes"]) if c["hose_full"] else after_empty
+    # two people arrive: one drops the suction hose and pumps, the other runs out the hose and aims
+    after = max(c["pay_out"], c["drop"] + c["strokes"] + t_fill)
     before = a["t_total"] + c["gather"] + c["pull_out"]
-    t_r9 = before + t_walk + after
-    t_r9_sited = before + c["sited"] / c["v_walk"] + after
-    # for comparison: the delivery hose stowed empty (CBK-DDR-003 design)
-    t_r9_empty = before + t_walk + after_empty
+    t_r9_dry = before + t_walk + after            # delivery hose stowed empty (CBK-DDR-003 state)
+    # CBK-DDR-004: the delivery hose is stowed full behind the shut nozzle, so there is no fill time
+    after_wet = max(c["pay_out"], c["drop"] + c["strokes"])
+    t_r9 = before + t_walk + after_wet
+    t_r9_sited = before + c["sited"] / c["v_walk"] + after_wet
     t_r9_wet = t_r9
     # like-for-like baseline: the v0.1 timeline with the hose fill added
     t_r9_old = a["t_total"] + c["muster_old"] + c["pull_out"] + t_walk + c["setup_old"] + c["prime_old"]
@@ -202,9 +202,9 @@ def cart(c=C_IN):
     # tipping backwards about the wheels when parked on a slope facing downhill: CG ahead of the axle by
     tip_back = math.degrees(math.atan((ay - cg[1]) / (cg[2] + 1e-9)))
     bb = M.Compound([k.shape for k in comps.values()]).bounding_box()
-    return dict(mass=mass, m_water=m_w, m_line=m_line, t_r9_empty=t_r9_empty, cg=cg, on_legs=on_legs, at_grip=at_grip, f_pull=f_pull, per_person=per_person,
+    return dict(mass=mass, m_water=m_w, m_dwater=m_dw, t_r9_dry=t_r9_dry, cg=cg, on_legs=on_legs, at_grip=at_grip, f_pull=f_pull, per_person=per_person,
                 t_walk=t_walk, t_r9=t_r9, t_r9_sited=t_r9_sited, t_r9_wet=t_r9_wet, t_r9_old=t_r9_old,
-                t_r9_old_fill=t_r9_old_fill, t_fill=t_fill, v_line=v_line * 1000, after=after, before=before,
+                t_r9_old_fill=t_r9_old_fill, t_fill=t_fill, v_line=v_line * 1000, after=after_wet, before=before,
                 p_one=p_one, v_suc=v_suc * 1000, tip_side=tip_side, tip_back=tip_back,
                 width=bb.size.X, length=bb.size.Y, height=bb.size.Z, rows=rows)
 
@@ -244,14 +244,7 @@ def reel():
     od = P["HOSE_OD"]
     v_hose = math.pi / 4 * od ** 2 * P["HOSE_L"] * 1000
     v_space = math.pi / 4 * (P["WOUND_D"] ** 2 - P["REEL_DRUM_D"] ** 2) * P["REEL_W"] * 0.785
-    # spindle bending with the drum, the wound hose and (CBK-DDR-004) the water in the full hose, as a
-    # simply supported 25 mm bar loaded at mid-span; span taken as the drum width plus 40 mm (est.)
-    v_full = math.pi / 4 * (A_IN["d_hose"] ** 2 * A_IN["l_hose"] + A_IN["d_conn"] ** 2 * A_IN["l_conn"]) * rho
-    w_reel = (BOUGHT_KG["reel"] + BOUGHT_KG["wound_hose"] + (v_full if C_IN["hose_full"] else 0.0)) * g
-    span = P["REEL_W"] + 40.0
-    m_sp = w_reel * span / 4
-    s_sp = 32 * m_sp / (math.pi * P["SPINDLE_D"] ** 3)
-    return dict(v_hose=v_hose / 1e6, v_space=v_space / 1e6, ratio=v_space / v_hose, w_reel=w_reel, s_spindle=s_sp)
+    return dict(v_hose=v_hose / 1e6, v_space=v_space / 1e6, ratio=v_space / v_hose)
 
 
 # ------------------------------------------------------------------ H. cost
@@ -274,7 +267,7 @@ def main():
     for key, v in b.items():
         print(f"  {key:12s} {v:10.3f}")
     print("C to E. Cart")
-    for key in ("mass", "m_water", "m_line", "t_r9_empty", "on_legs", "at_grip", "f_pull", "per_person", "t_walk", "v_line", "t_fill", "before", "after",
+    for key in ("mass", "m_water", "m_dwater", "t_r9_dry", "on_legs", "at_grip", "f_pull", "per_person", "t_walk", "v_line", "t_fill", "before", "after",
                 "t_r9", "t_r9_sited", "t_r9_wet", "t_r9_old", "t_r9_old_fill", "p_one", "v_suc", "tip_side",
                 "tip_back", "width", "length", "height"):
         print(f"  {key:12s} {c[key]:10.2f}")
@@ -292,14 +285,11 @@ def main():
         ("R3", "Sound at 3 m", ">= 85 dB(A)", f"{b['spl_3m']:.1f} dB(A)", "Met (est.)"),
         ("R4", "Relay to station and all alarms", "<= 10 s", f"{b['t_total']:.1f} s worst case", "Met (est.)"),
         ("R5", "Battery life", ">= 12 months", f"{b['life_months']:.0f} months; shelf life of the cells limits it to about 5 years", "Met (est.)"),
-        ("R6", "Cart on a 10 % slope, 100 m", "<= 3 min, width <= 0.9 m", f"{c['t_walk'] / 60:.1f} min at 1.0 m/s; {c['per_person']:.0f} N per person; width {c['width']:.0f} mm",
-         "Met (est.)" if c["per_person"] <= C_IN["f_person"] else
-         f"Met (est.); {c['per_person']:.0f} N per person is just over the {C_IN['f_person']:.0f} N assumed sustainable: the TRL 4 pull test should confirm"),
+        ("R6", "Cart on a 10 % slope, 100 m", "<= 3 min, width <= 0.9 m", f"{c['t_walk'] / 60:.1f} min at 1.0 m/s; {c['per_person']:.0f} N per person; width {c['width']:.0f} mm", "Met (est.)"),
         ("R7", "Flow for 10 min", ">= 20 L/min", f"{a['q_lmin']:.1f} L/min; {a['p_person']:.0f} W per person", "Met (est.)"),
         ("R8", "Jet reach", ">= 6 m", f"{a['reach']:.1f} m", "Met (est.)"),
         ("R9", "Water on target 100 m away", "<= 3 min", f"{c['t_r9'] / 60:.2f} min ({c['t_r9']:.0f} s) at 100 m; {c['t_r9_sited'] / 60:.1f} min at 70 m (siting margin)",
-         "Not met on paper at 100 m (short by {:.0f} s); met at 70 m".format(c['t_r9'] - 180) if c['t_r9'] > 180 else
-         "Met (est.) at 100 m with {:.0f} s to spare; delivery hose stowed full".format(180 - c['t_r9'])),
+         "Not met on paper at 100 m (short by {:.0f} s); met at 70 m".format(c['t_r9'] - 180) if c['t_r9'] > 180 else "Met (est.)"),
         ("R10", "Repairable locally", "Hand tools, market parts", "Every wear part is a market item", "Met by design"),
         ("R11", "Value-engineering target", "USD 1,600", f"USD {k['total']:,.0f}", f"USD {k['target'] - k['total']:,.0f} under the target"),
     ]

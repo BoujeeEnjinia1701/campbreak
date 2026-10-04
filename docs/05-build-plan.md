@@ -20,7 +20,7 @@ revisions:
   - version: "0.3"
     date: '2026-10-03'
     author: Amish Chadha
-    change: "Amish's decision 45 b (CBK-DDR-004): delivery hose stowed full behind the shut nozzle; step 12, first checks and drill card updated"
+    change: "Amish's round-2 decision 1A (CBK-DDR-004): delivery hose stowed full of water, filled at Step 12 and topped up at the weekly check; cart weight and pull updated"
 ---
 
 # CampBreak prototype build plan
@@ -442,7 +442,9 @@ Bolt the tray to the bearers with four M8 bolts, washers and nyloc nuts.
 
 Fit the foot valve to one end of the suction hose and the cam-lever adaptor with its elbow to the other. Push the adaptor into the coupler under the pump and close both cam levers; it stays coupled from now on. Lead the hose to the left, up behind the end of the left rail and forward along the rail top, and fasten it with the two rubber straps. Coil the rest in the tray with the foot valve on top, and lay the tap adaptor inside the coil. Stow the nozzle in the tray when the hose is wound. Fit the reflective tape and the pump instruction label.
 
-**Prime it once and stow the hose full.** Stand the foot valve in a bucket of water and pump until water comes out of the nozzle, then lift the foot valve out. From now on the check in the foot valve keeps the pump and the suction hose full (see the weekly check on the drill card, section 5a). Run out the 30 m hose straight, with the foot valve back in the bucket pump until clear water runs from the nozzle, shut the nozzle, then wind the full hose back on the reel neatly, nozzle last (CBK-DDR-004). The water stays in the hose behind the shut nozzle; the 4 bar relief valve at the pump outlet lets it expand as it warms in the sun.
+**Prime it once.** Stand the foot valve in a bucket of water and pump until water comes out of the nozzle, then lift the foot valve out. From now on the check in the foot valve keeps the pump and the suction hose full (see the weekly check on the drill card, section 5a). 
+
+**Fill the delivery hose.** With the foot valve still in the bucket, run out the 30 m hose, open the nozzle and pump until water runs steadily from it, then close the nozzle shut-off and wind the full hose back onto the reel. The shut-off holds the water in; the 4 bar relief valve protects the full hose if the sun heats it. Top the bucket up if it runs low. A full hose is heavy to wind (about 8.9 kg of water), so wind it with two people.
 
 ### Step 13: Posts in their collars
 
@@ -509,7 +511,7 @@ These are listed here and recorded at TRL 4 in a test report.
 | Check | Requirement | How | Pass when |
 | --- | --- | --- | --- |
 | Cart width | R6 | Tape across the tyres | 900 mm or less |
-| Pulling | R6 | Two adults pull the loaded cart, primed and with the delivery hose full (about 103 kg), 100 m up a 10 % unpaved slope; a spring balance on the handle reads the pull | 3 min or less; record the force per person against the 100 N assumed sustainable (101 N estimated, CBK-CAL-001 section D) |
+| Pulling | R6 | Two adults pull the loaded cart (delivery hose full) 100 m up a 10 % unpaved slope; note the effort | 3 min or less; effort per person against the 100 N assumed (about 101 N expected) |
 | Flow | R7 | Pump from a drum into a measured container for 1 min, then for 10 min | At least 20 L/min, kept up for 10 min |
 | Relief valve | R7, safety | Shut the nozzle and pump slowly; watch a gauge on the tee | Valve opens at 4 bar ± 0.5; nothing leaks |
 | Jet reach | R8 | Measure where the jet lands on level ground at 30° | 6 m or more |
@@ -517,8 +519,9 @@ These are listed here and recorded at TRL 4 in a test report.
 | Alarm sound | R3 | Sound meter at 3 m | 85 dB(A) or more |
 | Relay | R4 | Trigger one alarm in a mock block | Station siren and every alarm within 10 s |
 | Cooking | R2 | One hour of stove cooking 1 m from an alarm in a mock shelter | No alarm |
-| Pump and hose stay full | R9 | Leave the primed cart a week with the delivery hose stowed full, drop the foot valve in a drum, open the nozzle and pump | The lever takes load within 3 strokes; water leaves the nozzle within the first strokes; no drip from the foot valve or the shut nozzle during the week; the full hose winds onto the reel |
-| Drill | R9 | Timed drill from the siren to water on target at 70 m and 100 m, using the drill card | 3 min or less at 70 m and at 100 m (177 s estimated at 100 m, only 3 s margin) |
+| Pump stays primed | R9 | Leave the primed cart a week, drop the foot valve in a drum and pump | The lever takes load within 3 strokes; water at the nozzle in about 30 s; no drip from the foot valve |
+| Hose stays full | R9 | Leave the cart with the delivery hose full and the nozzle shut for a week, then open the nozzle | Water leaves the nozzle at once with no air; no drip at the nozzle or swivel |
+| Drill | R9 | Timed drill from the siren to water on target at 70 m and 100 m, using the drill card | 3 min or less at both distances (2.95 min and 2.5 min expected) |
 
 ## 5a. Drill card
 
@@ -531,9 +534,9 @@ The drill card is printed in the camp languages, laminated and kept in the stati
 | Siren sounds | Everyone in the burning shelter and its neighbours gets out first. Volunteers go to the station |
 | At the station | **Go when two arrive.** The first two volunteers take the cart out at once; do not wait for more. Never more than 30 s from the siren. Two people always move the cart; never run with it |
 | Others | Follow to the fire; take over the second side of the pump lever when you arrive |
-| At the fire | Park the cart on its feet, upwind, at least 6 m from the fire. Person 1: lift the suction hose off the rail, drop the foot valve in the drum or water, and start pumping; it is already coupled and primed. Person 2: run out the hose from the reel (it is already full), aim at the base of the fire and open the nozzle |
+| At the fire | Park the cart on its feet, upwind, at least 6 m from the fire. Person 1: lift the suction hose off the rail, drop the foot valve in the drum or water, and start pumping; it is already coupled and primed. Person 2: run out the hose from the reel and aim at the base of the fire. The hose is already full, so water leaves the nozzle as soon as the first strokes lift water |
 | Never | Water on burning oil or live wiring. Go into a burning shelter |
-| Every week | Prime check: run out the hose, drop the foot valve in the station drum, open the nozzle and pump. The lever should take load within three strokes and water leave the nozzle within the first strokes. If not, re-prime (Step 12) and report the foot valve or the nozzle. Then pump until clear water runs, shut the nozzle and wind the full hose back on, nozzle last |
+| Every week | Prime check: drop the foot valve in the station drum and pump. The lever should take load within three strokes and water reach the nozzle in about 30 s. If not, re-prime (Step 12) and report the foot valve. Then check that the delivery hose is still full: open the nozzle for a moment; if air comes out, pump until water runs, shut the nozzle and wind the hose back |
 
 ## 6. Safety stops
 

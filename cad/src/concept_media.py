@@ -127,11 +127,11 @@ def blueprint():
         f"Two people pull {c['per_person']:.0f} N each on a 10 % slope (est.)",
         f"Hand pump {a['q_lmin']:.1f} L/min at 60 double strokes/min (est.)",
         f"Jet reach about {a['reach']:.1f} m with a 6 mm jet (est.)",
-        "30 m of 19 mm hose on a reel, stowed full; 4 m suction hose coupled",
+        "30 m of 19 mm hose on a reel, stowed full; 4 m suction hose left coupled",
         "Check foot valve keeps the pump primed between uses",
         "Relief valve at 4 bar; one 200 L drum lasts about 10 min",
         f"Heat alarms alert the station in {b['t_total']:.0f} s worst case (est.)",
-        f"Water on target {c['t_r9'] / 60:.1f} min at 100 m, {c['t_r9_sited'] / 60:.1f} min at 70 m (est.)",
+        f"Water on target {c['t_r9'] / 60:.2f} min at 100 m, {c['t_r9_sited'] / 60:.1f} min at 70 m (est.)",
         f"Block kit: 24 alarms, station, cart; about USD {sizing.cost()['total']:,.0f}"], x=276, y=158, width=140)
     s.save(MD / "concept-blueprint")
     shutil.rmtree(MD / "_views", ignore_errors=True)

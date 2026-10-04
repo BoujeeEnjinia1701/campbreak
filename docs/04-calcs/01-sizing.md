@@ -20,12 +20,12 @@ revisions:
 - version: "0.3"
   date: '2026-10-03'
   author: Amish Chadha
-  change: "Amish's decision 45 b (CBK-DDR-004): delivery hose stowed full of water behind the shut nozzle; R9 met at 100 m (177 s); cart mass, balance and pull force updated"
+  change: "Amish's round-2 decision 1A (CBK-DDR-004): delivery hose stowed full of water; R9 recomputed at 100 m and 70 m; cart mass and pull per person recomputed"
 ---
 
 # CampBreak sizing calculations
 
-On paper the kit meets ten of its eleven requirements. The hand pump gives about 20.4 L/min with two people pumping at a sustainable 47 W each, the 6 mm jet reaches about 6.9 m, the alarms are loud enough and fast enough, and R9 (water on target within 3 min for a shelter 100 m away) is now **met on paper**, at 177 s (2.95 min), with 3 s to spare. Amish's decisions of 2026-10-03 got it there: CBK-DDR-003 (check foot valve, suction hose left coupled to the pump, "go when two arrive" with a 30 s gather) and CBK-DDR-004 (decision 45 b: the 30 m delivery hose stowed full of water behind the shut nozzle, so the 26 s fill at the fire is gone). The full hose adds 8.9 kg: two people now pull the loaded cart up a 10 % slope with about 101 N each, just over the 100 N assumed sustainable, so R6 is met on time and width but the TRL 4 pull test should confirm the effort. R2 (no false alarm while cooking) cannot be calculated and needs a cooking trial at TRL 4. A shelter at most 70 m from a station, the siting margin kept from CBK-DDR-001 (D9), gets water in 2.5 min. The kit costs about USD 1,374 against a value-engineering target of USD 1,600.
+On paper the kit meets ten of its eleven requirements. The hand pump gives about 20.4 L/min with two people pumping at a sustainable 47 W each, the 6 mm jet reaches about 6.9 m, the alarms are loud enough and fast enough, and two people pull the loaded cart up a 10 % slope with about 101 N each, 1 N over the 100 N assumed sustainable. R2 (no false alarm while cooking) cannot be calculated and needs a cooking trial at TRL 4. R9 (water on target within 3 min for a shelter 100 m away) is now **met on paper**, at 2.95 min (177 s, 3 s to spare). Amish's R9 decisions of 2026-10-03 (CBK-DDR-003: check foot valve, suction hose left coupled to the pump, "go when two arrive" with a 30 s gather; CBK-DDR-004: delivery hose stowed full of water) bring the time from 3.8 min as first published to 2.95 min. A shelter at most 70 m from a station, the siting margin kept from CBK-DDR-001 (D9), gets water in 2.5 min. The kit costs about USD 1,374 against a value-engineering target of USD 1,600.
 
 Every figure comes from `docs/04-calcs/sizing.py`, which reads its geometry from `cad/src/model.py` and its prices from `bom/bom.csv`, and writes `docs/04-calcs/results.csv`. Inputs marked (est.) are estimates to be confirmed by measurement at TRL 4.
 
@@ -106,33 +106,34 @@ R3 has little margin: a sounder of at least 95 dB(A) at 1 m is specified in the 
 
 ## C. Cart mass and balance (R6)
 
-Steel parts are weighed from the model volumes at 7,850 kg/m³; bought parts use catalogue estimates (pump 14 kg, wheels 5.5 kg each, reel drum 9 kg, wound hose 11.4 kg, brass check foot valve 1.0 kg). Since CBK-DDR-003 the cart is stowed primed: the pump body (about 0.6 L, est.) and the 4 m suction hose (2.0 L) hold 2.6 kg of water, counted at the middle of the suction hose run. Since CBK-DDR-004 the 30 m delivery hose and the 1.2 m connecting hose are also stowed full behind the shut nozzle: 8.85 L, 8.9 kg of water, counted at the centre of the wound hose on the reel.
+Steel parts are weighed from the model volumes at 7,850 kg/m³; bought parts use catalogue estimates (pump 14 kg, wheels 5.5 kg each, reel drum 9 kg, wound hose 11.4 kg, brass check foot valve 1.0 kg). Since CBK-DDR-003 the cart is stowed primed: the pump body (about 0.6 L, est.) and the 4 m suction hose (2.0 L) hold 2.6 kg of water, counted at the middle of the suction hose run. Since CBK-DDR-004 the 30 m delivery hose (8.5 L) and the 1.2 m connecting hose (0.3 L) are stowed full too: 8.9 kg of water, counted at the wound hose and the connecting hose.
 
 *Table 5. Cart mass and balance.*
 
 | Quantity | Result |
 | --- | --- |
-| Loaded cart mass, stowed primed and with the delivery hose full | 103.4 kg (est.), of which 11.4 kg is water: 2.6 kg in the pump and suction hose, 8.9 kg in the delivery and connecting hoses (94.6 kg before CBK-DDR-004) |
-| Centre of mass | 5 mm left of the centre line, 109 mm in front of the axle and 409 mm up (was 6, 107 and 397 mm) |
-| Load on the front feet when parked | 140 N (was 126 N) |
-| Lift at the pull bar to raise the feet | 82 N (was 73 N) |
-| Tipping sideways | at 42° (was 43°) |
+| Loaded cart mass, stowed primed with the delivery hose full | 103.4 kg (est.), of which 2.6 kg is water in the pump and suction hose and 8.9 kg is water in the delivery and connecting hoses (94.6 kg before CBK-DDR-004) |
+| Centre of mass | 5 mm left of the centre line, 108 mm in front of the axle and 409 mm up |
+| Load on the front feet when parked | 139 N |
+| Lift at the pull bar to raise the feet | 81 N |
+| Tipping sideways | at 42° |
 | Overall size | 850 wide x 1,744 long x 1,067 tall |
 
 ## D. Pulling effort and speed (R6)
 
-Rolling resistance 0.10 on unpaved ground (est.), slope 10 %, two people. Pull force is the weight times the sine of the slope plus rolling resistance times the cosine: 202 N in all, 101 N each (185 N and 92 N before the delivery hose was stowed full). That is just over the 100 N per person assumed sustainable (est.), by about 1 %, which is well inside the uncertainty of the rolling resistance and of the 100 N figure itself. At 1.0 m/s, 100 m takes 1.7 min. The cart is 850 mm wide against a 900 mm limit. R6 is met (est.) on time and width; the effort is marginal and the TRL 4 pull test on a 10 % slope should confirm it (build plan, section 5).
+Rolling resistance 0.10 on unpaved ground (est.), slope 10 %, two people. Pull force is the weight times the sine of the slope plus rolling resistance times the cosine: 202 N in all, 101 N each (92 N before the delivery hose was stowed full). That is 1 N over the 100 N per person assumed sustainable (est.), so the assumption is slightly exceeded, not comfortably met: the pull is a steady push on a 10 % slope for 100 m, and a third person on the cart or a halt on the way covers it. At 1.0 m/s, 100 m takes 1.7 min. The cart is 850 mm wide against a 900 mm limit. R6 is met on time and width (est.), with the pull per person at the edge of the assumption; the TRL 4 timed trial measures it.
 
 ## E. Time to water on target (R9)
 
-Amish decided on 2026-10-03 (CBK-DDR-003, decision 1A): "1A 2A 3A 4A 5A 6A 7A 8A 9A 10A 11A". For CampBreak, 1A means three changes, with the 3 min target and the 70 m siting margin kept. On the same day he approved the round 2 recommendation (CBK-DDR-004, decision 45 b), a fourth change:
+Amish decided on 2026-10-03 (CBK-DDR-003, decision 1A): "1A 2A 3A 4A 5A 6A 7A 8A 9A 10A 11A". For CampBreak, 1A means three changes, with the 3 min target and the 70 m siting margin kept:
 
 1. A brass spring-loaded foot valve with a positive-seal check holds the 4 m suction hose and the pump full of water between uses, so the pump does not need priming.
 2. The suction hose stays coupled to the pump inlet by its cam-lever coupling and lies along the left rail, so nothing has to be coupled at the fire.
 3. The drilled rule "go when two arrive": the first two volunteers at the station take the cart at once, at most 30 s after the siren. Others follow to the fire.
-4. The delivery line (30 m of 19 mm hose and 1.2 m of connecting hose, 8.85 L) is stowed full of water behind the shut nozzle and topped up at the weekly check, so it no longer has to fill at the fire (26 s at 20.4 L/min with it empty).
 
-On arrival the two split the work. One lifts the suction hose off the cart, drops the foot valve in the water and starts pumping. The other runs out the full hose from the reel and aims; water leaves the nozzle as soon as it is opened and the pump is stroked.
+In round 2 Amish agreed to a fourth change (CBK-DDR-004): "i agree with all the 46 recommendations you provided. please proceed." The delivery hose (30 m of 19 mm hose and 1.2 m of connecting hose, 8.85 L) is stowed full of water behind the shut nozzle and refilled at the weekly check. The shut-off holds the water in, and the 4 bar relief valve already protects the full hose from heating in the sun.
+
+On arrival the two split the work. One lifts the suction hose off the cart, drops the foot valve in the water and starts pumping. The other runs out the hose from the reel and aims. With the delivery hose full, water leaves the nozzle on the first strokes. Before CBK-DDR-004 the empty line had to fill first: 26 s at 20.4 L/min, which version 0.1 of this note left out.
 
 *Table 6. Time from alarm to water on target.*
 
@@ -142,13 +143,13 @@ On arrival the two split the work. One lifts the suction hose off the cart, drop
 | Gather: go when two arrive | 30 s | 30 s | Drilled; at most 30 s |
 | Pull the cart out | 15 s | 15 s | (est.) |
 | Walk at 1.0 m/s | 100 s | 70 s | Section D |
-| Drop the coupled suction hose in the water | 10 s | 10 s | (est.) no coupling, no priming |
-| First strokes to lift water | 3 s | 3 s | (est.) pump and suction already full; at the same time as the run-out |
-| Fill the delivery line | 0 s | 0 s | Stowed full (CBK-DDR-004); 26 s if it were empty |
-| Run out the hose and aim | 25 s | 25 s | (est.) second person; now the critical path |
+| Drop the coupled suction hose in the water | 10 s, at the same time | 10 s, at the same time | (est.) first person; no coupling, no priming |
+| First strokes to lift water | 3 s, at the same time | 3 s, at the same time | (est.) pump and suction already full |
+| Fill the delivery line | 0 s | 0 s | Stowed full (CBK-DDR-004); 26 s when stowed empty |
+| Run out the hose and aim | 25 s | 25 s | (est.) second person; now sets the pace |
 | **Total** | **177 s (2.95 min)** | **147 s (2.5 min)** | |
 
-R9 is **met on paper** at 100 m: 177 s against 180 s, 3 s to spare. The margin is small and rests on estimates (the 30 s gather, the 15 s pull-out, the 25 s run-out and a 1.0 m/s walk), so the timed drill at TRL 4 decides it. At 70 m, the siting margin kept from CBK-DDR-001 (D9), it is met with 33 s to spare.
+R9 is **met on paper** at 100 m: 177 s against 180 s, 3 s to spare, a thin margin on estimated inputs (walk speed, gather time and pull-out time are all drilled values at TRL 4). At 70 m, the siting margin kept from CBK-DDR-001 (D9), it is met with 33 s to spare.
 
 *Table 7. What the decision changed, at 100 m.*
 
@@ -156,10 +157,10 @@ R9 is **met on paper** at 100 m: 177 s against 180 s, 3 s to spare. The margin i
 | --- | --- |
 | Version 0.1 timeline (60 s muster, 30 s set-up, 15 s priming), as published | 227 s (3.8 min) |
 | Version 0.1 timeline with the delivery line fill added | 253 s (4.2 min) |
-| Decision 1A (CBK-DDR-003), delivery hose empty | 191 s (3.2 min) |
-| Decisions 1A and 45 b (CBK-DDR-004), delivery hose stowed full | 177 s (2.95 min) |
+| After CBK-DDR-003, delivery hose stowed empty | 191 s (3.2 min) |
+| Decided design, delivery hose stowed full (CBK-DDR-004) | 177 s (2.95 min) |
 
-On a like-for-like basis decision 1A saves 62 s and decision 45 b a further 14 s: the 26 s fill is gone, but the 25 s run-out by the second person becomes the critical path in its place, so the gain is the 14 s by which the fill outlasted the run-out. The cost is 8.9 kg more on the cart (section D). No new parts are needed: the shut nozzle holds the water in, and the 4 bar relief valve already protects the full hose from pressure as it warms in the sun.
+On a like-for-like basis CBK-DDR-003 saves 62 s and CBK-DDR-004 a further 14 s (the 39 s after arrival, set by the drop, the first strokes and the 26 s fill, becomes 25 s, set by running out the hose). The price is 8.9 kg more on the cart, which raises the pull per person from 92 N to 101 N. That is slightly above the 100 N assumed sustainable, and the R6 time is still met. The hose must stay full for a week: a TRL 4 check confirms that the nozzle shut-off and the pump hold it.
 
 Until the next volunteers arrive, one person pumps alone. Holding 60 double strokes a minute needs about 95 W at the shaft and 56 N at the grip from that person, more than the 75 W assumed sustainable for 10 minutes (est.), but for the minute or two until the others arrive it is a reasonable effort. The drill (build plan, section 5) checks it.
 
@@ -169,9 +170,7 @@ Wind 30 m/s (est., a strong monsoon gust), net uplift coefficient 1.2 on the 3.1
 
 ## G. Hose reel capacity
 
-30 m of hose with a 28 mm outside diameter needs 18.5 L of space; the drum (200 mm core, 440 mm wound diameter, 210 mm wide, packing 0.785) offers 19.9 L, a ratio of 1.08. The hose fits with little room to spare, so it must be wound neatly (build plan, step 10). A full hose is slightly rounder and stiffer than an empty one, so the ratio is a little tighter in practice; winding it full is part of the TRL 4 checks.
-
-With the hose stowed full (CBK-DDR-004) the reel carries the drum (9 kg), the hose (11.4 kg) and 8.9 kg of water: 287 N on the 25 mm spindle. Taken as a simple beam loaded at mid-span over 250 mm (est.), the spindle sees about 12 MPa, far below the 235 MPa yield of S235.
+30 m of hose with a 28 mm outside diameter needs 18.5 L of space; the drum (200 mm core, 440 mm wound diameter, 210 mm wide, packing 0.785) offers 19.9 L, a ratio of 1.08. The hose fits with little room to spare, so it must be wound neatly (build plan, step 10).
 
 ## H. Cost (R11)
 
@@ -197,9 +196,9 @@ Value-engineering target: USD 1,600. Estimated cost of the constructable design:
 | R3 | Sound at 3 m | At least 85 dB(A) | 85.5 dB(A) | Met (est.) |
 | R4 | Relay to station and all alarms | 10 s or less | 7.2 s worst case | Met (est.) |
 | R5 | Battery life | 12 months or more | Cell shelf life, about 5 years | Met (est.) |
-| R6 | Cart on a 10 % slope, 100 m | 3 min or less, width 0.9 m or less | 1.7 min; 101 N per person; 850 mm wide | Met (est.); 101 N per person is just over the 100 N assumed sustainable: the TRL 4 pull test should confirm |
+| R6 | Cart on a 10 % slope, 100 m | 3 min or less, width 0.9 m or less | 1.7 min; 101 N per person (1 N over the 100 N assumed); 850 mm wide | Met (est.) |
 | R7 | Flow for 10 min | 20 L/min or more | 20.4 L/min; 47 W per person | Met (est.) |
 | R8 | Jet reach | 6 m or more | 6.9 m | Met (est.) |
-| R9 | Water on target 100 m away | 3 min or less | 2.95 min (177 s) at 100 m; 2.5 min at 70 m (siting margin) | Met (est.) at 100 m with 3 s to spare; delivery hose stowed full |
+| R9 | Water on target 100 m away | 3 min or less | 2.95 min (177 s) at 100 m; 2.5 min at 70 m (siting margin) | Met (est.), 3 s to spare |
 | R10 | Repairable locally | Hand tools, market parts | Every wear part is a market item | Met by design |
 | R11 | Cost | Value-engineering target USD 1,600 | USD 1,374 | USD 226 under the target |

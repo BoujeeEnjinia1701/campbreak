@@ -28,7 +28,7 @@ revisions:
 - version: "0.5"
   date: '2026-10-03'
   author: Amish Chadha
-  change: "Amish's decision 45 b (CBK-DDR-004): delivery hose stowed full; figures updated"
+  change: "Amish's round-2 decision 1A (CBK-DDR-004): delivery hose stowed full; cart mass, pull and R9 figures updated"
 ---
 
 # CampBreak design precis
@@ -82,17 +82,13 @@ All decided under Amish's 2026-10-03 pre-approval (CBK-DDR-001 and CBK-DDR-002):
 3. **A bought pump.** A semi-rotary wing pump is sold in most target markets and is repaired with hand tools.
 4. **No lithium cells.** Alkaline cells in the alarms and a sealed lead-acid battery at the station.
 5. **Relief valve at 4 bar** so a shut nozzle cannot over-pressure the hose or fittings.
-6. **A cart two people can pull,** 850 mm wide, about 103 kg loaded, primed and with the delivery hose full, on 400 mm puncture-proof wheels.
+6. **A cart two people can pull,** 850 mm wide, about 103 kg loaded and primed, with the delivery hose full, on 400 mm puncture-proof wheels.
 7. **Stations sited within 70 m of every shelter** as the siting margin for the 3 minute target.
 
 Decided by Amish on 2026-10-03 ("1A 2A 3A 4A 5A 6A 7A 8A 9A 10A 11A"; CBK-DDR-003):
 
 8. **A primed pump and a coupled suction hose.** A check foot valve keeps the pump and suction hose full, and the hose stays coupled to the pump, so nothing is coupled or primed at the fire.
 9. **Go when two arrive.** The first two volunteers at the station take the cart, within 30 s of the siren; the rule is drilled and printed on the drill card.
-
-Decided by Amish on 2026-10-03 ("i approve all of the 47 recommendations provided by you. Execute them."; decision 45 b, CBK-DDR-004):
-
-10. **The delivery hose stowed full.** The 30 m hose is kept full of water behind the shut nozzle and topped up at the weekly check, so water leaves the nozzle with the first strokes at the fire.
 
 ## First-order numbers
 
@@ -108,8 +104,8 @@ Decided by Amish on 2026-10-03 ("i approve all of the 47 recommendations provide
 | Alarm sound at 3 m | 85.5 dB(A) | 95 dB(A) at 1 m |
 | Alarm relay, worst case | 7.2 s | Three retries, station broadcast heard within 4 s |
 | Alarm battery life | Cell shelf life (about 5 years) | 6.9 µA average |
-| Cart mass, loaded, primed, hose full | 103 kg | Catalogue masses for bought parts; 2.6 kg of water in the pump and suction hose, 8.9 kg in the delivery hose |
-| Pull on a 10 % slope | 101 N per person, just over the 100 N assumed sustainable | Rolling resistance 0.10 |
+| Cart mass, loaded and primed | 103 kg | Catalogue masses for bought parts; 2.6 kg of water in the pump and suction hose and 8.9 kg in the delivery hose |
+| Pull on a 10 % slope | 101 N per person | Rolling resistance 0.10; 1 N over the 100 N assumed sustainable |
 | Water on target | 2.95 min at 100 m; 2.5 min at 70 m | 1.0 m/s walking, 30 s gather, delivery hose stowed full |
 | Block kit cost | USD 1,374 | bom/bom.csv |
 
@@ -136,7 +132,7 @@ From the preliminary patent, trademark and prior-art screen (not legal advice):
 
 > **Safety:** The station battery is sealed lead-acid: fuse it at the terminal, keep it in the locked box, and recycle it through a battery dealer. The alarms use alkaline AA cells; follow the camp's disposal rules. There are no lithium cells in the kit.
 
-> **Safety:** The loaded cart weighs about 95 kg. Two people pull it; on slopes steeper than 10 % a third person holds it back. Park it on its feet with the handle down.
+> **Safety:** The loaded cart weighs about 103 kg, with the delivery hose full. Two people pull it; on slopes steeper than 10 % a third person holds it back. Park it on its feet with the handle down.
 
 This design is published as an open engineering reference by Design Molecule Labs. It is not certified equipment.
 

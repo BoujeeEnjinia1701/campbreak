@@ -33,7 +33,7 @@ def main():
               material="S235 steel tube, welded and painted; bought pump, reel, hoses and wheels",
               revisions=[("P1", "First issue from the constructable TRL 3 model (CBK-DDR-002)", DATE, "AC"),
                          ("P2", "Suction hose stowed coupled to the pump, check foot valve (CBK-DDR-003)", DATE, "AC"),
-                         ("P3", "Delivery hose stowed full; mass and pull figures (CBK-DDR-004)", DATE, "AC")])
+                         ("P3", "Delivery hose stowed full; figures updated (CBK-DDR-004)", DATE, "AC")])
     s.add_ortho(views)
     s.add_svg(views["iso"], 276, 37, 140, 105, label="Isometric view",
               sublabel="Not to scale; seen from the front right and above, about 30 deg elevation")
@@ -44,9 +44,10 @@ def main():
         f"Pull bar 33.7 mm, {P['BAR_Z']:.0f} up, {2 * P['BAR_HALF']:.0f} long",
         f"Pump shaft {P['PUMP_Z']:.0f} up; lever grip {P['LEVER_R']:.0f} from the shaft",
         f"Reel 500 mm flanges, spindle {P['REEL_Z']:.0f} up; 30 m of 19 mm hose",
-        f"About {c['mass']:.0f} kg stowed primed, hose full; {c['per_person']:.0f} N each for two on a 10 % slope (est.)",
+        f"About {c['mass']:.0f} kg stowed primed, delivery hose full; {c['per_person']:.0f} N each for two on a 10 % slope (est.)",
         f"{a['q_lmin']:.1f} L/min; jet reach about {a['reach']:.1f} m (est.)",
-        "Suction hose coupled on the left rail, check foot valve; delivery hose stowed full",
+        "Suction hose left coupled to the pump on the left rail; check foot valve keeps it primed",
+        "Delivery hose stowed full behind the shut nozzle; no fill time at the fire",
         "Block station and heat alarm: making sketches CBK-DWG-109 to 112",
     ], x=276, y=150, width=140)
     s.save(ROOT / "cad/drawings/CBK-DWG-001")
