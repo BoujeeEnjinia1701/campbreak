@@ -1,5 +1,45 @@
 # Review note: CampBreak
 
+## Session 2026-10-03: round 2 requirement decisions applied
+
+Amish, 2026-10-03: "i approve all of the 47 recommendations provided by you. Execute them." For CampBreak this is portfolio decision 45, the recommendation on register open decision 1, decided exactly as worded: option (b), stow the 30 m delivery hose full of water behind the shut nozzle.
+
+### What changed
+
+- `docs/decisions/0004-delivery-hose-stowed-full.md` (CBK-DDR-004, new).
+- `docs/04-calcs/sizing.py`: the water in the full delivery and connecting hoses (8.85 L) is added to the cart at the centre of the wound hose; the R9 timeline drops the 26 s fill; the empty-hose time is kept for comparison; a reel spindle check is added. Re-run: `results.csv` and `docs/04-calcs/01-sizing.md` (CBK-CAL-001 v0.3) updated.
+- `docs/03-requirements.md` (CBK-REQ-001 v0.5): R6 and R9 results; wording unchanged.
+- `docs/05-build-plan.md` (CBK-BLD-001 v0.3): step 12 now stows the hose full; first checks (pull force recorded against 100 N, hose stays full a week, drill pass at 100 m) and drill card (at the fire, weekly check) updated.
+- `docs/02-concept.md` (CBK-PRC-001 v0.5) and `README.md`: mass, pull and R9 figures.
+- `docs/06-design-decisions.md` (CBK-DEC-001 v0.3): open decision 1 moved to Decisions made; items to confirm 10 and 11 added; change log.
+- `cad/src/sheets.py` and `cad/src/concept_media.py`: GA CBK-DWG-001 and concept sheet CBK-DWG-010 at Rev P3 with the new figures; both regenerated. `project.yaml`: CBK-DDR-004 added to `trl_evidence`.
+- No change to `cad/src/model.py` geometry, the BOM, STEP or STL files, the build plan pictures or the hero, exploded, cutaway and 3D model. The hero geometry did not change, so no photoreal re-render is needed.
+
+### Requirement status
+
+- R9: 191 s (3.2 min) at 100 m, not met by 11 s, **to 177 s (2.95 min), met (est.) with 3 s to spare**; 2.5 min at 70 m (was 2.7).
+- R6: still met (est.) on time (1.7 min) and width (850 mm), but the pull rises from 92 to **101 N per person** on a 10 % slope, just over the 100 N assumed sustainable. The TRL 4 pull test should confirm.
+- Ten of eleven requirements now met on paper or by design; R2 still needs the cooking trial at TRL 4.
+
+### Mass and cost
+
+- Cart 94.6 kg to 103.4 kg (11.4 kg of water). Front feet 140 N, lift at the pull bar 82 N, tipping sideways at 42°. Reel spindle about 12 MPa with the full hose (est.).
+- Cost unchanged: value-engineering target USD 1,600; estimated cost of the constructable design USD 1,374 (USD 226 under the target).
+
+### Decisions proposed and awaiting Amish
+
+None new. Two items to confirm when parts are bought: the nozzle shut-off holds the full hose for a week, and the full hose winds onto the reel (8 % spare room).
+
+### Safety
+
+- The full hose sits behind a shut nozzle; the existing 4 bar relief valve at the pump outlet lets the water expand in the sun; hose rated 10 bar.
+- The cart is now about 103 kg: two people always move it, a third holds back on slopes over 10 %, nobody downhill of it, nobody runs with it. The 101 N per person is an estimate just over the sustainable figure; the pull test comes before volunteers drill with the full cart.
+- The 3 s R9 margin rests on estimated times; nothing in the drill card asks anyone to hurry or run.
+
+### Recommended next step
+
+None at TRL 3 for this decision. At TRL 4: the pull test with the full cart on a 10 % slope, the week-long hose-full check and the timed drill at 70 and 100 m.
+
 ## Session 2026-09-30: scaffolded
 
 ### What was done

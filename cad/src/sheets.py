@@ -1,4 +1,4 @@
-"""CampBreak general arrangement drawing CBK-DWG-001 (Rev P2), hand-pumped hose cart.
+"""CampBreak general arrangement drawing CBK-DWG-001 (Rev P3), hand-pumped hose cart.
 
 Run from the repo root:  python3 cad/src/sheets.py
 Builds cad/drawings/CBK-DWG-001.svg, .pdf and .png from the constructable model in cad/src/model.py
@@ -28,11 +28,12 @@ def main():
     D = M.derived()
     P = M.P
     s = Sheet(project="CampBreak", title="Hand-pumped hose cart for camp blocks: general arrangement",
-              dwg_no="CBK-DWG-001", rev="P2", author="Amish Chadha", date=DATE,
+              dwg_no="CBK-DWG-001", rev="P3", author="Amish Chadha", date=DATE,
               concept="CONCEPT, NOT FOR FABRICATION",
               material="S235 steel tube, welded and painted; bought pump, reel, hoses and wheels",
               revisions=[("P1", "First issue from the constructable TRL 3 model (CBK-DDR-002)", DATE, "AC"),
-                         ("P2", "Suction hose stowed coupled to the pump, check foot valve (CBK-DDR-003)", DATE, "AC")])
+                         ("P2", "Suction hose stowed coupled to the pump, check foot valve (CBK-DDR-003)", DATE, "AC"),
+                         ("P3", "Delivery hose stowed full; mass and pull figures (CBK-DDR-004)", DATE, "AC")])
     s.add_ortho(views)
     s.add_svg(views["iso"], 276, 37, 140, 105, label="Isometric view",
               sublabel="Not to scale; seen from the front right and above, about 30 deg elevation")
@@ -43,9 +44,9 @@ def main():
         f"Pull bar 33.7 mm, {P['BAR_Z']:.0f} up, {2 * P['BAR_HALF']:.0f} long",
         f"Pump shaft {P['PUMP_Z']:.0f} up; lever grip {P['LEVER_R']:.0f} from the shaft",
         f"Reel 500 mm flanges, spindle {P['REEL_Z']:.0f} up; 30 m of 19 mm hose",
-        f"About {c['mass']:.0f} kg stowed primed; {c['per_person']:.0f} N each for two on a 10 % slope (est.)",
+        f"About {c['mass']:.0f} kg stowed primed, hose full; {c['per_person']:.0f} N each for two on a 10 % slope (est.)",
         f"{a['q_lmin']:.1f} L/min; jet reach about {a['reach']:.1f} m (est.)",
-        "Suction hose left coupled to the pump on the left rail; check foot valve keeps it primed",
+        "Suction hose coupled on the left rail, check foot valve; delivery hose stowed full",
         "Block station and heat alarm: making sketches CBK-DWG-109 to 112",
     ], x=276, y=150, width=140)
     s.save(ROOT / "cad/drawings/CBK-DWG-001")

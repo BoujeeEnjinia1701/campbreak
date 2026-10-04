@@ -67,7 +67,7 @@ Full design precis: [docs/02-concept.md](docs/02-concept.md) · Requirements: [d
 - 30 m of 19 mm hose on a reel, jet and spray nozzle
 - 4 m suction hose with foot valve strainer, quick couplings and a tap adaptor
 
-Key figures at TRL 3 (estimates): about 20 L/min at the nozzle with two people pumping, a jet reach of about 6.9 m, an alarm relay of 7.2 s, and a 95 kg cart two people pull up a 10 % slope. A check foot valve keeps the pump primed, the suction hose stays coupled, and volunteers go when two arrive. Water on target within 3 minutes is still not met on paper for a shelter 100 m away (3.2 min); stations are sited within 70 m of every shelter (2.7 min).
+Key figures at TRL 3 (estimates): about 20 L/min at the nozzle with two people pumping, a jet reach of about 6.9 m, an alarm relay of 7.2 s, and a 103 kg cart two people pull up a 10 % slope with about 101 N each. A check foot valve keeps the pump primed, the suction hose stays coupled, the 30 m delivery hose is stowed full of water behind the shut nozzle, and volunteers go when two arrive. Water reaches a shelter 100 m away in about 2.95 min, inside the 3 minute target with 3 s to spare on paper; stations are still sited within 70 m of every shelter (2.5 min) as a margin.
 
 ## Building the prototype
 

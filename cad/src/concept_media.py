@@ -115,10 +115,11 @@ def blueprint():
     shown = K.with_scale_figure(ps, gap=900)
     views = project_views(Compound([p.shape for p in ps]), MD / "_views")
     views["iso"] = project_views(Compound([p.shape for p in shown]), MD / "_views_fig")["iso"]
-    s = Sheet(project=PROJECT, title="Hand-pumped hose cart for camp blocks: concept", dwg_no=DWG, rev="P2",
+    s = Sheet(project=PROJECT, title="Hand-pumped hose cart for camp blocks: concept", dwg_no=DWG, rev="P3",
               author="Amish Chadha", date=DATE, theme="blueprint", material="Massing model for concept communication",
               revisions=[("P1", "Concept sheet from the constructable TRL 3 model", DATE, "AC"),
-                         ("P2", "Suction hose left coupled, check foot valve (CBK-DDR-003)", DATE, "AC")])
+                         ("P2", "Suction hose left coupled, check foot valve (CBK-DDR-003)", DATE, "AC"),
+                         ("P3", "Delivery hose stowed full; figures updated (CBK-DDR-004)", DATE, "AC")])
     s.add_ortho(views)
     s.add_svg(views["iso"], 276, 37, 140, 103, label="Isometric view", sublabel="Not to scale; figure is a 1.75 m person")
     s.add_notes("Key figures", [
@@ -126,7 +127,7 @@ def blueprint():
         f"Two people pull {c['per_person']:.0f} N each on a 10 % slope (est.)",
         f"Hand pump {a['q_lmin']:.1f} L/min at 60 double strokes/min (est.)",
         f"Jet reach about {a['reach']:.1f} m with a 6 mm jet (est.)",
-        "30 m of 19 mm hose on a reel; 4 m suction hose left coupled",
+        "30 m of 19 mm hose on a reel, stowed full; 4 m suction hose coupled",
         "Check foot valve keeps the pump primed between uses",
         "Relief valve at 4 bar; one 200 L drum lasts about 10 min",
         f"Heat alarms alert the station in {b['t_total']:.0f} s worst case (est.)",

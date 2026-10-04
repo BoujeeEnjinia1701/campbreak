@@ -3,7 +3,7 @@ doc_id: CBK-DEC-001
 title: CampBreak design decisions register
 project: CampBreak
 doc_type: Design decisions register
-version: "0.2"
+version: "0.3"
 status: Draft
 date: '2026-10-03'
 author: Amish Chadha
@@ -17,6 +17,10 @@ revisions:
   date: '2026-10-03'
   author: Amish Chadha
   change: "Amish's R9 decision 1A recorded (CBK-DDR-003); one new open decision: stow the delivery hose full"
+- version: "0.3"
+  date: '2026-10-03'
+  author: Amish Chadha
+  change: "Open decision 1 decided by Amish as option (b), delivery hose stowed full (CBK-DDR-004, portfolio decision 45); no open decisions remain; two items to confirm added"
 ---
 
 # CampBreak design decisions register
@@ -25,9 +29,7 @@ Every design decision still to be made, and every decision made, in one place. E
 
 ## Open decisions
 
-| # | Decision | State | Options | Recommendation |
-| --- | --- | --- | --- | --- |
-| 1 | Stow the 30 m delivery hose full of water (R9) | Proposed, awaiting Amish. After decision 1A (CBK-DDR-003) R9 is 191 s at 100 m, 11 s over the 180 s target. The rest of the gap is the 26 s needed to fill the empty delivery hose at the fire (CBK-CAL-001, section E) | (a) Leave as is: R9 not met on paper at 100 m by 11 s; the 70 m siting margin holds (161 s). (b) Stow the delivery hose full behind the shut nozzle, refilled at the weekly check: 177 s at 100 m (met, 3 s margin), 8.9 kg more on the cart (about 101 N per person on a 10 % slope, just over the 100 N assumed sustainable; the R6 time is still met), no new parts; the 4 bar relief valve already protects the full hose from heating in the sun. (c) Restate R9 to 3.25 min at 100 m | (b): the only option that meets R9 on paper at 100 m without new parts; check at TRL 4 that the nozzle shut-off and the pump hold the hose full for a week |
+None. Amish decided open decision 1 (stow the delivery hose full, R9) on 2026-10-03: option (b) (CBK-DDR-004; see Decisions made). Carrying it out raised no new decision for Amish; two items are added to the list below, and the TRL 4 pull test is to confirm the pull effort of about 101 N per person.
 
 ## To confirm when parts are bought
 
@@ -42,6 +44,8 @@ Every design decision still to be made, and every decision made, in one place. E
 | 7 | The wheels have 20 mm bores and 75 mm hubs | Sets the axle, spacer and collar lengths | CBK-DDR-002, P2 |
 | 8 | The relief valve opens at 4 bar ± 0.5 bar | Pressure limit for the hose and fittings | CBK-DDR-001, D7 |
 | 9 | The foot valve's check holds the suction hose and pump full for a week, and the suction hose bends to 60 mm radius or less | The pump stays primed (R9); the stowed hose path has a 63 mm bend | CBK-DDR-003 |
+| 10 | The nozzle's shut-off holds the full delivery hose for a week without dripping | The hose stays full, so no fill time at the fire (R9, 3 s margin) | CBK-DDR-004 |
+| 11 | The hose bought winds full onto the reel drum, which has 8 % spare room when empty | The full hose is rounder and stiffer than the empty one | CBK-CAL-001, section G; CBK-DDR-004 |
 
 ## Value engineering
 
@@ -68,6 +72,11 @@ Value-engineering target: USD 1,600 (a hypothetical control target, not a limit)
 | 2026-10-03 | Design for construction: welded tube frame, through axle in axle plates, legs and feet, handle, pump stand, lever extension, reel on uprights, connecting hose and relief tee, four-post station, fixings for the station fittings, hose tray and the alarm's plate and ties (P1 to P12) | Amish, same pre-approval | CBK-DDR-002 |
 | 2026-10-03 | `budget_usd` left at USD 1,600 as the value-engineering target; cost variations accepted | Amish: "I also accept any cost overruns or variations from the assumed scope cost." | CBK-DDR-001 |
 | 2026-10-03 | R9 (decision 1A): brass check foot valve so the pump stays primed; suction hose left coupled to the pump inlet with a cam-lever coupling and strapped along the left rail; drilled rule "go when two arrive" with a 30 s gather on the drill card, the station sign and in the build plan; 3 min target and "stations within 70 m of every shelter" kept as the siting margin. Result: 3.2 min at 100 m (not met, 11 s over), 2.7 min at 70 m | Amish: "1A 2A 3A 4A 5A 6A 7A 8A 9A 10A 11A" | CBK-DDR-003 |
+| 2026-10-03 | R9 (open decision 1, portfolio decision 45): **(b)**, stow the 30 m delivery hose full of water behind the shut nozzle. Result: 177 s at 100 m, met with 3 s to spare; cart 8.9 kg heavier (103.4 kg), about 101 N per person on a 10 % slope, just over the 100 N assumed sustainable, which the TRL 4 pull test should confirm; no new parts | Amish, 2026-10-03: "i approve all of the 47 recommendations provided by you. Execute them." | CBK-DDR-004 |
+
+## Change log
+
+- 2026-10-03, v0.3: open decision 1 (stow the delivery hose full) moved from "Proposed, awaiting Amish" to Decisions made as option (b) (CBK-DDR-004); no open decisions remain; items to confirm 10 and 11 added.
 
 ## Safety
 
